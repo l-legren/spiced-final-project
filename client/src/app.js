@@ -14,6 +14,7 @@ import NavBar from "./navbar";
 import Profile from "./profile";
 import { getUserInfo } from "./actions";
 import { useDispatch } from "react-redux";
+import OtherUser from "./other-user";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -33,10 +34,17 @@ const App = () => {
 
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <NavBar />
-            </ThemeProvider>
-            <Profile />
+            <BrowserRouter>
+                <ThemeProvider theme={theme}>
+                    <NavBar />
+                </ThemeProvider>
+
+                <Route exact path="/" render={() => <Profile />} />
+                <Route
+                    path="/users/:id"
+                    render={(props) => <OtherUser props={props} />}
+                />
+            </BrowserRouter>
         </>
     );
 };

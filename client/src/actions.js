@@ -16,12 +16,16 @@ export async function getUserInfo() {
     };
 }
 
+// BIO
+
 export function addBio(newBio) {
     return {
         type: "ADD_BIO",
         newBio: newBio,
     };
 }
+
+// MODAL PROFILE PIC
 
 export function picModalVisible() {
     return {
@@ -41,6 +45,15 @@ export function addProfilePicture(profilePic) {
     return {
         type: "UPDATE_PROFILE_PICTURE",
         profilePic: profilePic,
+    };
+}
+
+// OTHER PROFILE
+
+export function addOtherUserInfo(otherUserInfo) {
+    return {
+        type: "ADD_OTHER_USER_INFO",
+        otherUserInfo: otherUserInfo,
     };
 }
 

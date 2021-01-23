@@ -257,21 +257,21 @@ app.post("/update-bio", (req, res) => {
         .catch((err) => console.log("Error storing bio", err));
 });
 
-// app.get("/user-info/:id", (req, res) => {
-//     const { id } = req.params;
-//     db.getUser(id).then(({ rows }) => {
-//         if (rows[0] == undefined) {
-//             res.json({
-//                 success: false,
-//             });
-//         } else {
-//             res.json({
-//                 data: rows[0],
-//                 loggedId: req.session.userId,
-//             });
-//         }
-//     });
-// });
+app.get("/user-info/:id", (req, res) => {
+    const { id } = req.params;
+    db.getUser(id).then(({ rows }) => {
+        if (rows[0] == undefined) {
+            res.json({
+                success: false,
+            });
+        } else {
+            res.json({
+                data: rows[0],
+                loggedId: req.session.userId,
+            });
+        }
+    });
+});
 
 // app.get("/log-out", (req, res) => {
 //     req.session.userId = null;

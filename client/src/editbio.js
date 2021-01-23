@@ -36,7 +36,7 @@ const EditBio = () => {
 
     return (
         <>
-            <Typography variant="h3" color="initial">
+            <Typography variant="h4" color="initial">
                 {profileInfo.first} {profileInfo.last}
             </Typography>
             {profileInfo.bio ? (

@@ -5,12 +5,13 @@ import {
     AppBar,
     Toolbar,
     IconButton,
-    Avatar
+    Avatar,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     offset: theme.mixins.toolbar,
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
     const classes = useStyles();
+    const profileInfo = useSelector((state) => (state && state.userInfo) || {});
 
     const handleClick = () => {
         console.log("clicking on menu");
@@ -45,15 +47,24 @@ const NavBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>photoMe</Typography>
-                    <Avatar></Avatar>
-                    <IconButton aria-label="home" color='inherit'>
+                    <Typography variant="h6" className={classes.title}>
+                        photoMe
+                    </Typography>
+                    <Avatar
+                        src={
+                            (profileInfo.profile_pic &&
+                                profileInfo.profile_pic) ||
+                            "./default.jpg"
+                        }
+                        alt="users profile picture"
+                    ></Avatar>
+                    <IconButton aria-label="home" color="inherit">
                         <HomeIcon />
                     </IconButton>
-                    <IconButton aria-label="pm" color='inherit'>
+                    <IconButton aria-label="pm" color="inherit">
                         <ChatBubbleOutlineIcon />
                     </IconButton>
-                    <IconButton aria-label="logout" color='inherit'>
+                    <IconButton aria-label="logout" color="inherit">
                         <ExitToAppIcon />
                     </IconButton>
                 </Toolbar>

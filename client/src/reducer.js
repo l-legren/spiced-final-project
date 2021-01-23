@@ -41,6 +41,13 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "ADD_OTHER_USER_INFO") {
+        state = {
+            ...state,
+            otherUserInfo: action.otherUserInfo,
+        };
+    }
+
     // if (action.type == "SHOW_FRIENDS") {
     //     state = {
     //         ...state,
