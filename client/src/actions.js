@@ -23,6 +23,27 @@ export function addBio(newBio) {
     };
 }
 
+export function picModalVisible() {
+    return {
+        type: "PIC_MODAL_VISIBLE",
+        modalVisible: true,
+    };
+}
+
+export function picModalHidden() {
+    return {
+        type: "PIC_MODAL_HIDDEN",
+        modalHidden: false,
+    };
+}
+
+export function addProfilePicture(profilePic) {
+    return {
+        type: "UPDATE_PROFILE_PICTURE",
+        profilePic: profilePic,
+    };
+}
+
 // FRIENDS, REQUESTERS AND OPEN REQUESTS
 
 // export async function getFriends(id) {

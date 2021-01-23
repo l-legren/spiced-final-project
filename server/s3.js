@@ -18,7 +18,7 @@ module.exports.upload = (req, res, next) => {
 
     const promise = s3
         .putObject({
-            Bucket: "mysocialspicedbucket",
+            Bucket: "final-spiced-project",
             ACL: "public-read",
             Key: filename,
             Body: fs.createReadStream(path),

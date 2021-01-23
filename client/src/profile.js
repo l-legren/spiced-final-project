@@ -4,22 +4,35 @@ import { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { Button, TextField } from "@material-ui/core";
 import instance from "./axios";
-import { getUserInfo, addBio } from "./actions";
+import { getUserInfo, addBio, picModalVisible } from "./actions";
 import EditBio from "./editbio";
+import Uploader from "./uploader";
 
 const Profile = () => {
     const dispatch = useDispatch();
     const profileInfo = useSelector((state) => (state && state.userInfo) || {});
 
+    const handleClickOpen = () => {
+        dispatch(picModalVisible());
+    };
+
     return (
         <>
+            <Uploader />
             <Grid container spacing={1} display="flex" justify="center">
-                <Grid item xs={12} md={6} lg={3}>
-                    <img src={profileInfo.profilePic || "./default.jpg"}></img>
+                <Grid item xs={12} md={6} lg={6}>
+                    <img
+                        src={
+                            (profileInfo.profile_pic &&
+                                profileInfo.profile_pic) ||
+                            "./default.jpg"
+                        }
+                        style={{ width: 250, height: 250 }}
+                        onClick={handleClickOpen}
+                    ></img>
                 </Grid>
-                <EditBio />
-                <Grid item xs={12} md={6} lg={3}>
-                    NOSE
+                <Grid item xs={12} md={6} lg={6}>
+                    <EditBio />
                 </Grid>
             </Grid>
         </>

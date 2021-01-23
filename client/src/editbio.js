@@ -24,8 +24,18 @@ const EditBio = () => {
             .catch((err) => console.log("Error sending bio:", err));
     };
 
+    const myTextField = (
+        <TextField
+            defaultValue={bio ? bio : ""}
+            multiline
+            rows={2}
+            rowsMax={4}
+            onChange={(e) => setBio(e.target.value)}
+        />
+    );
+
     return (
-        <Grid item xs={12} md={6} lg={3}>
+        <>
             <Typography variant="h3" color="initial">
                 {profileInfo.first} {profileInfo.last}
             </Typography>
@@ -36,13 +46,7 @@ const EditBio = () => {
                     </Typography>
                     {editVisibility && (
                         <>
-                            <TextField
-                                defaultValue={bio ? bio : ""}
-                                multiline
-                                rows={2}
-                                rowsMax={4}
-                                onChange={(e) => setBio(e.target.value)}
-                            />
+                            {myTextField}
                             <Button
                                 variant="outlined"
                                 color="primary"
@@ -71,13 +75,7 @@ const EditBio = () => {
                                 flexDirection: "column",
                             }}
                         >
-                            <TextField
-                                defaultValue={bio ? bio : ""}
-                                multiline
-                                rows={2}
-                                rowsMax={4}
-                                onChange={(e) => setBio(e.target.value)}
-                            />
+                            {myTextField}
                             <Button
                                 variant="outlined"
                                 color="primary"
@@ -97,7 +95,7 @@ const EditBio = () => {
                     )}
                 </>
             )}
-        </Grid>
+        </>
     );
 };
 

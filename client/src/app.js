@@ -25,15 +25,17 @@ const App = () => {
     // const [profilePic, setProfilePic] = useState("");
     // const [bio, setBio] = useState("");
 
+    const theme = createMuiTheme();
+
     useEffect(() => {
         dispatch(getUserInfo());
     }, []);
 
     return (
         <>
-            {/* <ThemeProvider> */}
-            <NavBar />
-            {/* </ThemeProvider> */}
+            <ThemeProvider theme={theme}>
+                <NavBar />
+            </ThemeProvider>
             <Profile />
         </>
     );

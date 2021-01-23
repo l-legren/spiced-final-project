@@ -11,7 +11,7 @@ export default function reducer(state = {}, action) {
             ...state,
             userInfo: Object.keys(action.userInfo)
                 .filter((key) =>
-                    ["id", "first", "last", "profile_pic", 'bio'].includes(key)
+                    ["id", "first", "last", "profile_pic", "bio"].includes(key)
                 )
                 .reduce((obj, key) => {
                     obj[key] = action.userInfo[key];
@@ -23,7 +23,21 @@ export default function reducer(state = {}, action) {
     if (action.type == "ADD_BIO") {
         state = {
             ...state,
-            userInfo: {...state.userInfo, bio: action.newBio },
+            userInfo: { ...state.userInfo, bio: action.newBio },
+        };
+    }
+
+    if (action.type == "PIC_MODAL_VISIBLE") {
+        state = {
+            ...state,
+            picModal: action.modalVisible,
+        };
+    }
+
+    if (action.type == "PIC_MODAL_HIDDEN") {
+        state = {
+            ...state,
+            picModal: action.modalHidden,
         };
     }
 
