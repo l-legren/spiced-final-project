@@ -16,7 +16,7 @@ const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
-const { upload } = require("./s3.js");
+const { upload, uploadImageboard } = require("./s3.js");
 const { s3Url } = require("./config.json");
 
 // MIDDLEWARE
@@ -228,6 +228,28 @@ app.get("/user", (req, res) => {
 app.post("/upload-picture", uploader.single("picture"), upload, (req, res) => {
     const { filename } = req.file;
     const fullUrl = `${s3Url}${filename}`;
+    db.updateProfilePic(fullUrl, req.session.userId)
+        .then(({ rows }) => {
+            console.log(
+                "Pic stored in database and returned:",
+                rows[0].profile_pic
+            );
+            const profile_pic = rows[0].profile_pic;
+            res.json({
+                pic: profile_pic,
+            });
+        })
+        .catch((err) => {
+            console.log("Error storing pic on db:", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+app.post("/upload-imageboard", uploader.single("picture"), upload, (req, res) => {
+    const { filename } = req.file;
+    const fullUrl = `${req.session.userId}/${s3Url}${filename}`;
     db.updateProfilePic(fullUrl, req.session.userId)
         .then(({ rows }) => {
             console.log(

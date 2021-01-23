@@ -40,3 +40,31 @@ module.exports.upload = (req, res, next) => {
             res.sendStatus(404);
         });
 };
+
+module.exports.uploadImageboard = (req, res, next) => {
+    const { filename, mimetype, size, path } = req.file;
+    
+    const promise = s3
+        .putObject({
+            Bucket: "final-spiced-project",
+            ACL: "public-read",
+            Key: `${req.session.userId}/${filename}`,
+            Body: fs.createReadStream(path),
+            ContentType: mimetype,
+            ContentLength: size,
+        })
+        .promise();
+
+    promise
+        .then(() => {
+            console.log("Upload succesful");
+            // it worked!!!
+            next();
+            // fs.unlink(path, () => {});
+        })
+        .catch((err) => {
+            // uh oh
+            console.log(err);
+            res.sendStatus(404);
+        });
+};

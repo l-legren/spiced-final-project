@@ -13,18 +13,11 @@ import axios from "axios";
 import NavBar from "./navbar";
 import Profile from "./profile";
 import { getUserInfo } from "./actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OtherUser from "./other-user";
 
 const App = () => {
     const dispatch = useDispatch();
-
-    // const [first, setFirst] = useState("");
-    // const [last, setLast] = useState("");
-    // const [id, setId] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [profilePic, setProfilePic] = useState("");
-    // const [bio, setBio] = useState("");
 
     const theme = createMuiTheme();
 

@@ -57,6 +57,29 @@ export function addOtherUserInfo(otherUserInfo) {
     };
 }
 
+// MODAL IMAGEBOARD
+
+export function imageboardModalVisible() {
+    return {
+        type: "IMAGEBOARD_MODAL_VISIBLE",
+        modalVisible: true,
+    };
+}
+
+export function imageboardModalHidden() {
+    return {
+        type: "IMAGEBOARD_MODAL_HIDDEN",
+        modalHidden: false,
+    };
+}
+
+export function addImageboardPicture(imageboardPic) {
+    return {
+        type: "ADD_IMAGEBOARD_PICTURE",
+        imageboardPic: imageboardPic,
+    };
+}
+
 // FRIENDS, REQUESTERS AND OPEN REQUESTS
 
 // export async function getFriends(id) {

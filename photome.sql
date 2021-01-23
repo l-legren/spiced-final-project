@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS friendship;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS imageboard;
+DROP TABLE IF EXISTS chat_messages;
 DROP TABLE IF EXISTS reset_codes;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -28,6 +30,13 @@ CREATE TABLE friendship (
     receiver_id INT NOT NULL REFERENCES users(id),
     friendship BOOLEAN DEFAULT false,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE imageboard (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES users(id),
+  url VARCHAR(255),
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE chat_messages (

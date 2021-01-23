@@ -27,17 +27,13 @@ const NavBar = () => {
     const classes = useStyles();
     const profileInfo = useSelector((state) => (state && state.userInfo) || {});
 
-    const handleClick = () => {
-        console.log("clicking on menu");
-    };
-
     return (
         <>
             <AppBar
                 position="fixed"
+                variant="dense"
                 aria-label=""
                 color="primary"
-                className={classes.colorsBar}
             >
                 <Toolbar>
                     <IconButton

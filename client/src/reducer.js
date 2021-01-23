@@ -41,10 +41,31 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "UPDATE_PROFILE_PICTURE") {
+        state = {
+            ...state,
+            userInfo: { ...state.userInfo, profile_pic: action.profilePic },
+        };
+    }
+
     if (action.type == "ADD_OTHER_USER_INFO") {
         state = {
             ...state,
             otherUserInfo: action.otherUserInfo,
+        };
+    }
+
+    if (action.type == "IMAGEBOARD_MODAL_VISIBLE") {
+        state = {
+            ...state,
+            imageboardModal: action.modalVisible,
+        };
+    }
+
+    if (action.type == "IMAGEBOARD_MODAL_HIDDEN") {
+        state = {
+            ...state,
+            imageboardModal: action.modalVisible,
         };
     }
 

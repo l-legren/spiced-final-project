@@ -6,20 +6,21 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addProfilePicture, picModalHidden } from "./actions";
+import { addImageboardPicture, imageboardModalHidden } from "./actions";
 import Grid from "@material-ui/core/Grid";
 import instance from "./axios";
 
-const Uploader = () => {
+const UploaderImageboard = () => {
     const dispatch = useDispatch();
-    const picModal = useSelector((state) => (state && state.picModal) || false);
-    // const userInfo = useSelector((state) => (state && state.userInfo) || {});
+    const imageboardModal = useSelector(
+        (state) => (state && state.imageboardModal) || false
+    );
 
-    const [picPreview, setPicPreview] = useState("");
-    const [profilePic, setProfilePic] = useState("");
+    const [picPreviewImageboard, setPicPreviewImageboard] = useState("");
+    const [imageboardPic, setImageboardPic] = useState("");
 
     const handleClose = () => {
-        dispatch(picModalHidden());
+        dispatch(imageboardModalHidden());
     };
 
     const handleChange = (e) => {
@@ -29,28 +30,28 @@ const Uploader = () => {
         const url = reader.readAsDataURL(file);
 
         reader.onloadend = () => {
-            setPicPreview(reader.result);
+            setPicPreviewImageboard(reader.result);
         };
 
-        setProfilePic(e.target.files[0]);
+        setImageboardPic(e.target.files[0]);
     };
 
     const handleUpload = () => {
         const fd = new FormData();
-        fd.append("picture", profilePic);
+        fd.append("picture", imageboardPic);
         instance
-            .post("/upload-picture", fd)
+            .post("/upload-imageboard/", fd)
             .then(({ data }) => {
                 console.log("Data from db after uploading", data);
-                dispatch(addProfilePicture(data.pic));
-                dispatch(picModalHidden());
+                dispatch(addImageboardPicture(data.pic));
+                dispatch(imageboardModalHidden());
             })
             .catch((err) => console.log("Error requesting from Server: ", err));
     };
 
     return (
         <Dialog
-            open={picModal}
+            open={imageboardModal}
             onClose={handleClose}
             aria-labelledby="profile-pic-dialog"
         >
@@ -59,10 +60,10 @@ const Uploader = () => {
                 <DialogContentText>
                     Pleae upload here your Profile Picture
                 </DialogContentText>
-                {picPreview ? (
+                {picPreviewImageboard ? (
                     <>
                         <img
-                            src={picPreview}
+                            src={picPreviewImageboard}
                             alt="Pic Preview"
                             style={{ width: 40, height: 40 }}
                         />
@@ -112,4 +113,4 @@ const Uploader = () => {
     );
 };
 
-export default Uploader;
+export default UploaderImageboard;

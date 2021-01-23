@@ -8,6 +8,7 @@ import { getUserInfo, addBio, picModalVisible } from "./actions";
 import EditBio from "./editbio";
 import Uploader from "./uploader";
 import UserImageBoard from "./user-imageboard";
+import { ImageList, ImageListItem } from "@material-ui/core";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -22,14 +23,19 @@ const Profile = () => {
             <Uploader />
             <Grid container spacing={1} display="flex" justify="center">
                 <Grid item xs={12} md={3} lg={3}>
-                    <Grid container spacing={1} display="flex" justify="flex-end">
+                    <Grid
+                        container
+                        spacing={1}
+                        display="flex"
+                        justify="flex-end"
+                    >
                         <img
                             src={
                                 (profileInfo.profile_pic &&
                                     profileInfo.profile_pic) ||
                                 "./default.jpg"
                             }
-                            alt='users profile picture'
+                            alt="users profile picture"
                             style={{ width: 250, height: 250 }}
                             onClick={handleClickOpen}
                         ></img>
