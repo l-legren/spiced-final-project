@@ -1,4 +1,32 @@
 export default function reducer(state = {}, action) {
+    if (action.type == "ADD_USER_INFO") {
+        state = {
+            ...state,
+            userInfo: action.userInfo,
+        };
+    }
+
+    if (action.type == "GET_USER_INFO") {
+        state = {
+            ...state,
+            userInfo: Object.keys(action.userInfo)
+                .filter((key) =>
+                    ["id", "first", "last", "profile_pic", 'bio'].includes(key)
+                )
+                .reduce((obj, key) => {
+                    obj[key] = action.userInfo[key];
+                    return obj;
+                }, {}),
+        };
+    }
+
+    if (action.type == "ADD_BIO") {
+        state = {
+            ...state,
+            userInfo: {...state.userInfo, bio: action.newBio },
+        };
+    }
+
     // if (action.type == "SHOW_FRIENDS") {
     //     state = {
     //         ...state,
@@ -38,20 +66,6 @@ export default function reducer(state = {}, action) {
     //         requestsFromUser: state.requestsFromUser.filter(
     //             (user) => user.id != action.unfriendId
     //         ),
-    //     };
-    // }
-
-    // if (action.type == "GET_USER_INFO") {
-    //     state = {
-    //         ...state,
-    //         userInfo: Object.keys(action.userInfo)
-    //             .filter((key) =>
-    //                 ["id", "first", "last", "profile_pic"].includes(key)
-    //             )
-    //             .reduce((obj, key) => {
-    //                 obj[key] = action.userInfo[key];
-    //                 return obj;
-    //             }, {}),
     //     };
     // }
 

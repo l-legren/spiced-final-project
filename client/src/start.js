@@ -17,7 +17,11 @@ const store = createStore(
 
 let elem;
 if (location.pathname == "/welcome") {
-    elem = <Welcome />;
+    elem = (
+        <Provider store={store}>
+            <Welcome />
+        </Provider>
+    );
 } else {
     init(store);
     elem = (

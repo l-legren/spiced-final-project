@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import instance from "./axios";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // MAETRIAL UI
 import { Button } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
@@ -11,7 +12,11 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
 import { OutlinedInput, Grid, Container } from "@material-ui/core";
 
+import { addUserInfo } from "./actions";
+
 const Registration = () => {
+    const dispatch = useDispatch();
+
     const [first, setFirst] = useState("");
     const [last, setLast] = useState("");
     const [email, setEmail] = useState("");
@@ -28,8 +33,9 @@ const Registration = () => {
         };
         instance
             .post("/registration", obj)
-            .then((obj) => {
-                console.log("This is my reg object: ", obj);
+            .then(({ data }) => {
+                console.log("This is data from Databse: ", data);
+                // dispatch(addUserInfo(data));
                 location.replace("/");
                 setError(false);
             })
@@ -45,7 +51,7 @@ const Registration = () => {
                 variant="h4"
                 color="initial"
                 align="center"
-                paragraph={true}
+                paragraph
                 gutterBottom={true}
             >
                 Sign Up
@@ -61,7 +67,7 @@ const Registration = () => {
                             value={first}
                             onChange={(e) => setFirst(e.target.value)}
                             required
-                            paragraph={true}
+                            paragraph
                         ></OutlinedInput>
                     </FormControl>
                     <FormControl>
@@ -72,7 +78,7 @@ const Registration = () => {
                             value={last}
                             onChange={(e) => setLast(e.target.value)}
                             required={true}
-                            paragraph={true}
+                            paragraph
                         ></OutlinedInput>
                     </FormControl>
                     <FormControl>
@@ -83,7 +89,7 @@ const Registration = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required={true}
-                            paragraph={true}
+                            paragraph
                         ></OutlinedInput>
                     </FormControl>
                     <FormControl>
@@ -94,7 +100,7 @@ const Registration = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required={true}
-                            paragraph={true}
+                            paragraph
                         ></OutlinedInput>
                     </FormControl>
                     <Grid item spacing={1}>
@@ -104,7 +110,7 @@ const Registration = () => {
                             type="submit"
                             startIcon={<Icon>arrow_upward</Icon>}
                             onClick={handleClick}
-                            paragraph={true}
+                            paragraph
                         >
                             Submit
                         </Button>

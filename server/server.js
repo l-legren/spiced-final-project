@@ -99,9 +99,8 @@ app.post("/registration", (req, res) => {
                 .addUser(first, last, email, hash)
                 .then(({ rows }) => {
                     req.session.userId = rows[0].id;
-                    res.json({
-                        success: true,
-                    });
+                    console.log(rows);
+                    res.json(rows[0]);
                     console.log("req.session set");
                 })
                 .catch((err) => {
@@ -213,18 +212,18 @@ app.post("/password/reset/confirm", (req, res) => {
         });
 });
 
-// app.get("/user", (req, res) => {
-//     db.getUser(req.session.userId)
-//         .then(({ rows }) => {
-//             res.json(rows[0]);
-//         })
-//         .catch((err) => {
-//             console.log("Error requesting data from server: ", err);
-//             res.json({
-//                 success: false,
-//             });
-//         });
-// });
+app.get("/user", (req, res) => {
+    db.getUser(req.session.userId)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log("Error requesting data from server: ", err);
+            res.json({
+                success: false,
+            });
+        });
+});
 
 // app.post("/upload-picture", uploader.single("picture"), upload, (req, res) => {
 //     const { filename } = req.file;
@@ -248,15 +247,15 @@ app.post("/password/reset/confirm", (req, res) => {
 //         });
 // });
 
-// app.post("/update-bio", (req, res) => {
-//     const { bio } = req.body;
-//     db.updateBio(bio, req.session.userId)
-//         .then(({ rows }) => {
-//             console.log("Data stored in db: ", rows);
-//             res.json(rows);
-//         })
-//         .catch((err) => console.log("Error storing bio", err));
-// });
+app.post("/update-bio", (req, res) => {
+    const { bio } = req.body;
+    db.updateBio(bio, req.session.userId)
+        .then(({ rows }) => {
+            console.log("Data stored in db: ", rows);
+            res.json(rows);
+        })
+        .catch((err) => console.log("Error storing bio", err));
+});
 
 // app.get("/user-info/:id", (req, res) => {
 //     const { id } = req.params;
