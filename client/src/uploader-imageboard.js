@@ -9,22 +9,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { addImageboardPicture, imageboardModalHidden } from "./actions";
 import Grid from "@material-ui/core/Grid";
 import instance from "./axios";
+import { useEffect } from "react";
 
 const UploaderImageboard = () => {
     const dispatch = useDispatch();
     const imageboardModal = useSelector(
         (state) => (state && state.imageboardModal) || false
     );
+    const imageboardPics = useSelector(
+        (state) => (state && state.imageboardPics) || []
+    );
 
     const [picPreviewImageboard, setPicPreviewImageboard] = useState("");
     const [imageboardPic, setImageboardPic] = useState("");
 
     const handleClose = () => {
-        dispatch(imageboardModalHidden());
+        dispatch(imageboardModalHidden(false));
     };
 
     const handleChange = (e) => {
-        console.log(e);
         const file = e.target.files[0];
         const reader = new FileReader();
         const url = reader.readAsDataURL(file);
@@ -43,8 +46,9 @@ const UploaderImageboard = () => {
             .post("/upload-imageboard/", fd)
             .then(({ data }) => {
                 console.log("Data from db after uploading", data);
-                dispatch(addImageboardPicture(data.pic));
-                dispatch(imageboardModalHidden());
+                dispatch(addImageboardPicture(data));
+                dispatch(imageboardModalHidden(false));
+                setPicPreviewImageboard("");
             })
             .catch((err) => console.log("Error requesting from Server: ", err));
     };

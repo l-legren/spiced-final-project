@@ -247,27 +247,26 @@ app.post("/upload-picture", uploader.single("picture"), upload, (req, res) => {
         });
 });
 
-app.post("/upload-imageboard", uploader.single("picture"), upload, (req, res) => {
-    const { filename } = req.file;
-    const fullUrl = `${req.session.userId}/${s3Url}${filename}`;
-    db.updateProfilePic(fullUrl, req.session.userId)
-        .then(({ rows }) => {
-            console.log(
-                "Pic stored in database and returned:",
-                rows[0].profile_pic
-            );
-            const profile_pic = rows[0].profile_pic;
-            res.json({
-                pic: profile_pic,
+app.post(
+    "/upload-imageboard",
+    uploader.single("picture"),
+    uploadImageboard,
+    (req, res) => {
+        const { filename } = req.file;
+        const fullUrl = `${s3Url}${req.session.userId}/${filename}`;
+        db.addImageboardPic(req.session.userId, fullUrl)
+            .then(({ rows }) => {
+                console.log("Pic stored in database and returned:", rows[0]);
+                res.json(rows[0]);
+            })
+            .catch((err) => {
+                console.log("Error storing pic on db:", err);
+                res.json({
+                    success: false,
+                });
             });
-        })
-        .catch((err) => {
-            console.log("Error storing pic on db:", err);
-            res.json({
-                success: false,
-            });
-        });
-});
+    }
+);
 
 app.post("/update-bio", (req, res) => {
     const { bio } = req.body;
@@ -293,6 +292,23 @@ app.get("/user-info/:id", (req, res) => {
             });
         }
     });
+});
+
+app.get("/get-user-imageboard", (req, res) => {
+    db.getUserImageboard(req.session.userId)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => console.log("Error getting users imageboard", err));
+});
+
+app.get("/get-user-imageboard", (req, res) => {
+    const { otherUserId } = req.params;
+    db.getUserImageboard(otherUserId)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => console.log("Error getting users imageboard", err));
 });
 
 // app.get("/log-out", (req, res) => {

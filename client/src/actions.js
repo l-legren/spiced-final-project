@@ -57,7 +57,7 @@ export function addOtherUserInfo(otherUserInfo) {
     };
 }
 
-// MODAL IMAGEBOARD
+// IMAGEBOARD
 
 export function imageboardModalVisible() {
     return {
@@ -77,6 +77,30 @@ export function addImageboardPicture(imageboardPic) {
     return {
         type: "ADD_IMAGEBOARD_PICTURE",
         imageboardPic: imageboardPic,
+    };
+}
+
+export async function getUserImageboard() {
+    try {
+        var { data } = await instance.get("/get-user-imageboard");
+    } catch {
+        (err) => console.log("Error getting users imageboard", err);
+    }
+    return {
+        type: "GET_USER_IMAGEBOARD",
+        imageboardPics: data,
+    };
+}
+
+export async function getOtherUserImageboard(id) {
+    try {
+        var { data } = await instance.get(`/get-others-imageboard/${id}`);
+    } catch {
+        (err) => console.log("Error getting others imageboard", err);
+    }
+    return {
+        type: "GET_OTHER_USER_IMAGEBOARD",
+        imageboardPics: data,
     };
 }
 

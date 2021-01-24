@@ -69,6 +69,22 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "GET_USER_IMAGEBOARD") {
+        state = {
+            ...state,
+            imageboardPicsUser: action.imageboardPics,
+        };
+    }
+
+    if (action.type == "ADD_IMAGEBOARD_PICTURE") {
+        state = {
+            ...state,
+            imageboardPicsUser: [
+                ...state.imageboardPicsUser,
+                action.imageboardPic,
+            ],
+        };
+    }
     // if (action.type == "SHOW_FRIENDS") {
     //     state = {
     //         ...state,

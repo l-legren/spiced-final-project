@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addOtherUserInfo } from "./actions.js";
 import instance from "./axios.js";
+import OtherUserImageBoard from "./other-user-imageboard";
 
 const OtherUser = ({ props }) => {
     const dispatch = useDispatch();
-    const userInfo = useSelector(state => (state && state.otherUserInfo) || {});
+    const userInfo = useSelector(
+        (state) => (state && state.otherUserInfo) || {}
+    );
 
     const [userInDatabase, setUserInDatabase] = useState(true);
 
@@ -27,7 +30,7 @@ const OtherUser = ({ props }) => {
             .catch((err) =>
                 console.log("Error fetching Data from Server: ", err)
             );
-    },[]);
+    }, []);
 
     return (
         <>
@@ -45,7 +48,11 @@ const OtherUser = ({ props }) => {
                                     userInfo.profile_pic) ||
                                 "./default.jpg"
                             }
-                            style={{ width: 250, height: 250, objectFit: 'cover' }}
+                            style={{
+                                width: 250,
+                                height: 250,
+                                objectFit: "cover",
+                            }}
                         ></img>
                     </Grid>
                 </Grid>
@@ -61,6 +68,7 @@ const OtherUser = ({ props }) => {
                     </>
                 </Grid>
             </Grid>
+            <OtherUserImageBoard props={props}/>
         </>
     );
 };

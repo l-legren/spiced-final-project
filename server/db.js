@@ -67,7 +67,7 @@ module.exports.threeMostRecent = () => {
 module.exports.matchUsers = (val) => {
     const q = `SELECT * FROM users
     WHERE first ILIKE $1`;
-    const params = [val + '%'];
+    const params = [val + "%"];
 
     return db.query(q, params);
 };
@@ -99,6 +99,24 @@ module.exports.updateBio = (bio, id) => {
     WHERE id = ($2)
     RETURNING bio`;
     const params = [bio, id];
+
+    return db.query(q, params);
+};
+
+module.exports.addImageboardPic = (userId, url) => {
+    const q = `INSERT INTO imageboard (user_id, url)
+    VALUES ($1, $2)
+    RETURNING user_id, url, timestamp`;
+    const params = [userId, url];
+
+    return db.query(q, params);
+};
+
+module.exports.getUserImageboard = (id) => {
+    const q = `SELECT * FROM imageboard
+    WHERE user_id = $1
+    ORDER BY timestamp ASC`;
+    const params = [id];
 
     return db.query(q, params);
 };

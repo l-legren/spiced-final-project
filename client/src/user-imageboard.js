@@ -1,37 +1,48 @@
-import { Button } from "@material-ui/core";
+import { Button, Box } from "@material-ui/core";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { imageboardModalVisible } from "./actions";
+import { imageboardModalVisible, getUserImageboard } from "./actions";
 import UploaderImageboard from "./uploader-imageboard";
 
 const UserImageBoard = () => {
     const dispatch = useDispatch();
+    const userImageboard = useSelector(
+        (state) => (state && state.imageboardPicsUser) || []
+    );
 
     const handleClickOpen = () => {
         dispatch(imageboardModalVisible());
     };
 
+    useEffect(() => {
+        dispatch(getUserImageboard());
+    }, []);
+
     return (
         <>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClickOpen}
-            >
-                UPLOAD IMAGE
-            </Button>
+            <Box sx={{ display: "flex", justifyContent: "center", padding: 5 }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleClickOpen}
+                >
+                    UPLOAD IMAGE
+                </Button>
+            </Box>
             <UploaderImageboard />
             <ImageList variant="masonry" cols={3} gap={8}>
-                <ImageListItem>
-                    <img src="/default.jpg" />
-                </ImageListItem>
-                <ImageListItem>
-                    <img src="/default.jpg" />
-                </ImageListItem>
-                <ImageListItem>
-                    <img src="/default.jpg" />
-                </ImageListItem>
+                {userImageboard.map((pic, idx) => {
+                    return (
+                        <ImageListItem key={idx}>
+                            <img
+                                srcSet={pic.url}
+                                alt={`Image ${pic.id} of user ${pic.user_id}`}
+                            />
+                        </ImageListItem>
+                    );
+                })}
             </ImageList>
         </>
     );

@@ -43,7 +43,7 @@ module.exports.upload = (req, res, next) => {
 
 module.exports.uploadImageboard = (req, res, next) => {
     const { filename, mimetype, size, path } = req.file;
-    
+    console.log('req.file: ', req.file)
     const promise = s3
         .putObject({
             Bucket: "final-spiced-project",
