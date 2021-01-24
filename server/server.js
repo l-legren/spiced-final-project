@@ -302,9 +302,9 @@ app.get("/get-user-imageboard", (req, res) => {
         .catch((err) => console.log("Error getting users imageboard", err));
 });
 
-app.get("/get-others-imageboard/:otherUserId", (req, res) => {
-    const { otherUserId } = req.params;
-    db.getUserImageboard(otherUserId)
+app.get("/get-others-imageboard/:id", (req, res) => {
+    const { id } = req.params;
+    db.getUserImageboard(id)
         .then(({ rows }) => {
             res.json(rows);
         })
@@ -313,7 +313,6 @@ app.get("/get-others-imageboard/:otherUserId", (req, res) => {
 
 app.get("/log-out", (req, res) => {
     req.session.userId = null;
-    console.log("This session id should be null", req.session.userId);
     res.json({
         success: true,
     });
@@ -433,57 +432,59 @@ app.get("/log-out", (req, res) => {
 
 // let onlineUsers = {};
 
-// io.on("connection", (socket) => {
-//     const userId = socket.request.session.userId;
+io.on("connection", (socket) => {
+    const userId = socket.request.session.userId;
 
-//     if (!userId) {
-//         return socket.disconnect(true);
-//     }
+    if (!userId) {
+        return socket.disconnect(true);
+    }
 
-//     onlineUsers[socket.id] = userId;
+    
 
-//     dbc.getUserInfo(userId).then(({ rows }) => {
-//         console.log("This is user connecting", rows[0]);
-//         socket.broadcast.emit("adding connected user", rows[0]);
-//     });
-//     let arrOfIds = [...new Set(Object.values(onlineUsers))];
-//     dbc.getConnectedUsers(arrOfIds)
-//         .then(({ rows }) => {
-//             socket.emit("connected users", rows);
-//         })
-//         .catch((err) => console.log("Error getting connected users", err));
-//     // Display most recent messages
-//     dbc.getTenMostRecentMessages().then(({ rows }) => {
-//         socket.emit("most recent messages", rows);
-//     });
-//     // Add a new message to the chatroom
-//     socket.on("new chat message", (message) => {
-//         dbc.newMessage(userId, message)
-//             .then(({ rows }) => {
-//                 dbc.getUserWithMessage(rows[0].message).then(({ rows }) => {
-//                     console.log("These are fields after double query", rows[0]);
-//                     io.sockets.emit("new message and user", rows[0]);
-//                 });
-//             })
-//             .catch((err) =>
-//                 console.log("Error while getting message user info", err)
-//             );
-//     });
-//     // DISCONNECT FROM usersConnected
-//     socket.on("disconnect", () => {
-//         console.log("Array before deleting", arrOfIds);
-//         while (onlineUsers[socket.id]) {
-//             delete onlineUsers[socket.id];
-//         }
-//         arrOfIds = [...new Set(Object.values(onlineUsers))];
-//         console.log("Array after deleting", arrOfIds);
-//         dbc.getConnectedUsers(arrOfIds)
-//             .then(({ rows }) => {
-//                 socket.broadcast.emit("user disconnected", rows);
-//             })
-//             .catch((err) => console.log("Error deleting user", err));
-//     });
-// });
+    // onlineUsers[socket.id] = userId;
+
+    // dbc.getUserInfo(userId).then(({ rows }) => {
+    //     console.log("This is user connecting", rows[0]);
+    //     socket.broadcast.emit("adding connected user", rows[0]);
+    // });
+    // let arrOfIds = [...new Set(Object.values(onlineUsers))];
+    // dbc.getConnectedUsers(arrOfIds)
+    //     .then(({ rows }) => {
+    //         socket.emit("connected users", rows);
+    //     })
+    //     .catch((err) => console.log("Error getting connected users", err));
+    // // Display most recent messages
+    // dbc.getTenMostRecentMessages().then(({ rows }) => {
+    //     socket.emit("most recent messages", rows);
+    // });
+    // // Add a new message to the chatroom
+    // socket.on("new chat message", (message) => {
+    //     dbc.newMessage(userId, message)
+    //         .then(({ rows }) => {
+    //             dbc.getUserWithMessage(rows[0].message).then(({ rows }) => {
+    //                 console.log("These are fields after double query", rows[0]);
+    //                 io.sockets.emit("new message and user", rows[0]);
+    //             });
+    //         })
+    //         .catch((err) =>
+    //             console.log("Error while getting message user info", err)
+    //         );
+    // });
+    // // DISCONNECT FROM usersConnected
+    // socket.on("disconnect", () => {
+    //     console.log("Array before deleting", arrOfIds);
+    //     while (onlineUsers[socket.id]) {
+    //         delete onlineUsers[socket.id];
+    //     }
+    //     arrOfIds = [...new Set(Object.values(onlineUsers))];
+    //     console.log("Array after deleting", arrOfIds);
+    //     dbc.getConnectedUsers(arrOfIds)
+    //         .then(({ rows }) => {
+    //             socket.broadcast.emit("user disconnected", rows);
+    //         })
+    //         .catch((err) => console.log("Error deleting user", err));
+    // });
+});
 
 // NEVER COMMENT OUT THIS LINE OF CODE!!!
 app.get("*", function (req, res) {

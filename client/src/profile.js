@@ -14,6 +14,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     const profileInfo = useSelector((state) => (state && state.userInfo) || {});
 
+    
     const handleClickOpen = () => {
         dispatch(picModalVisible());
     };

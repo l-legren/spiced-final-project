@@ -62,6 +62,8 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    // IMAGEBOARD
+
     if (action.type == "IMAGEBOARD_MODAL_VISIBLE") {
         state = {
             ...state,
@@ -92,6 +94,30 @@ export default function reducer(state = {}, action) {
             ],
         };
     }
+
+    if (action.type == "GET_OTHER_USER_IMAGEBOARD") {
+        state = {
+            ...state,
+            imageboardPicsOtherUser: action.imageboardPics,
+        };
+    }
+
+    // CHAT MESSAGING
+
+    if (action.type == "CHAT_ON") {
+        state = {
+            ...state,
+            chatState: action.chatVisible,
+        };
+    }
+
+    if (action.type == "CHAT_OFF") {
+        state = {
+            ...state,
+            chatState: action.chatHidden,
+        };
+    }
+
     // if (action.type == "SHOW_FRIENDS") {
     //     state = {
     //         ...state,

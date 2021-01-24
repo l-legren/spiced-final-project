@@ -104,6 +104,22 @@ export async function getOtherUserImageboard(id) {
     };
 }
 
+// PRIVATE CHAT
+
+export function chatVisibility(bool) {
+    return {
+        type: "CHAT_ON",
+        chatVisible: bool,
+    };
+}
+
+// export function chatOff() {
+//     return {
+//         type: "CHAT_OFF",
+//         chatHidden: false,
+//     };
+// }
+
 // FRIENDS, REQUESTERS AND OPEN REQUESTS
 
 // export async function getFriends(id) {

@@ -39,10 +39,11 @@ CREATE TABLE imageboard (
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE chat_messages (
+CREATE TABLE messages (
   id SERIAL PRIMARY KEY,
   message VARCHAR NOT NULL,
-  user_id INT NOT NULL REFERENCES users(id),
+  emitter_id INT NOT NULL REFERENCES users(id),
+  receiver_id INT NOT NULL REFERENCES users(id),
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

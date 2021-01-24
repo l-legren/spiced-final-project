@@ -1,4 +1,4 @@
-import { Button, Box } from "@material-ui/core";
+import { Button, Box, Grid } from "@material-ui/core";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import { useEffect, useState } from "react";
@@ -32,6 +32,11 @@ const UserImageBoard = () => {
                 </Button>
             </Box>
             <UploaderImageboard />
+            <Grid container spacing={1}>
+                <Grid item xs={0} sm={0} md={1} lg={3}></Grid>
+                <Grid item xs={12} sm={12} md={10} lg={6}></Grid>
+                <Grid item xs={0} sm={0} md={1} lg={3}></Grid>
+            </Grid>
             <ImageList variant="masonry" cols={3} gap={8}>
                 {userImageboard.map((pic, idx) => {
                     return (
