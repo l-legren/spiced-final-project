@@ -302,7 +302,7 @@ app.get("/get-user-imageboard", (req, res) => {
         .catch((err) => console.log("Error getting users imageboard", err));
 });
 
-app.get("/get-user-imageboard", (req, res) => {
+app.get("/get-others-imageboard/:otherUserId", (req, res) => {
     const { otherUserId } = req.params;
     db.getUserImageboard(otherUserId)
         .then(({ rows }) => {
@@ -311,13 +311,13 @@ app.get("/get-user-imageboard", (req, res) => {
         .catch((err) => console.log("Error getting users imageboard", err));
 });
 
-// app.get("/log-out", (req, res) => {
-//     req.session.userId = null;
-//     console.log(req.session.userId);
-//     res.json({
-//         success: true,
-//     });
-// });
+app.get("/log-out", (req, res) => {
+    req.session.userId = null;
+    console.log("This session id should be null", req.session.userId);
+    res.json({
+        success: true,
+    });
+});
 
 // app.get("/get-most-recent-users", (req, res) => {
 //     console.log("request done");

@@ -51,7 +51,14 @@ export default function reducer(state = {}, action) {
     if (action.type == "ADD_OTHER_USER_INFO") {
         state = {
             ...state,
-            otherUserInfo: action.otherUserInfo,
+            otherUserInfo: Object.keys(action.otherUserInfo)
+                .filter((key) =>
+                    ["id", "first", "last", "profile_pic", "bio"].includes(key)
+                )
+                .reduce((obj, key) => {
+                    obj[key] = action.otherUserInfo[key];
+                    return obj;
+                }, {}),
         };
     }
 

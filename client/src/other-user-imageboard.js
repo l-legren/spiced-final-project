@@ -3,7 +3,7 @@ import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { imageboardModalVisible, getUserImageboard } from "./actions";
+import { imageboardModalVisible, getOtherUserImageboard } from "./actions";
 
 const OtherUserImageBoard = ({ props }) => {
     const dispatch = useDispatch();
@@ -11,10 +11,10 @@ const OtherUserImageBoard = ({ props }) => {
         (state) => (state && state.imageboardOtherUser) || []
     );
 
-    // useEffect(() => {
-    //     console.log(props);
-    //     dispatch(getOtherUserImageboard());
-    // }, []);
+    useEffect(() => {
+        console.log(props);
+        dispatch(getOtherUserImageboard());
+    }, []);
 
     return (
         <>
