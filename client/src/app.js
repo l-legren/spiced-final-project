@@ -15,6 +15,7 @@ import Profile from "./profile";
 import { getUserInfo } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import OtherUser from "./other-user";
+import PrivateMessages from "./pmlayout";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const App = () => {
                     path="/users/:id"
                     render={(props) => <OtherUser props={props} />}
                 />
+                <Route path="/messages" render={() => <PrivateMessages />} />
             </BrowserRouter>
         </>
     );

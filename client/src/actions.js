@@ -113,12 +113,32 @@ export function chatVisibility(bool) {
     };
 }
 
-// export function chatOff() {
-//     return {
-//         type: "CHAT_OFF",
-//         chatHidden: false,
-//     };
-// }
+export async function getPmUsers() {
+    try {
+        var { data } = await instance.get("/get-private-messages");
+        console.log("Data private", data);
+    } catch {
+        (err) => console.log("error fetching private messages", err);
+    }
+
+    return {
+        type: "GET_PM_USERS",
+        pmUsers: data,
+    };
+}
+
+export async function getMessagesWithUser(user_id) {
+    try {
+        var { data } = await instance.get(`/msg-w-user/${user_id}`);
+    } catch {
+        (err) => console.log("Error getting messages with user", err);
+    }
+
+    return {
+        type: "GET_MESSAGES_W_USER",
+        messagesWithUser: data,
+    };
+}
 
 // FRIENDS, REQUESTERS AND OPEN REQUESTS
 

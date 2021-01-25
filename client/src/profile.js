@@ -14,7 +14,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     const profileInfo = useSelector((state) => (state && state.userInfo) || {});
 
-    
+
     const handleClickOpen = () => {
         dispatch(picModalVisible());
     };
@@ -23,6 +23,7 @@ const Profile = () => {
         <>
             <Uploader />
             <Grid container spacing={1} display="flex" justify="center">
+
                 <Grid item xs={12} md={3} lg={3}>
                     <Grid
                         container

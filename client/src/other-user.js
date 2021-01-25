@@ -6,7 +6,7 @@ import instance from "./axios.js";
 import OtherUserImageBoard from "./other-user-imageboard";
 import CameraIcon from "@material-ui/icons/Camera";
 import { flexbox } from "@material-ui/system";
-import ChatLayout from "./chatlayout.js";
+import ChatLayout from "./pmlayout.js";
 
 const OtherUser = ({ props }) => {
     const dispatch = useDispatch();

@@ -51,6 +51,7 @@ export default function reducer(state = {}, action) {
     if (action.type == "ADD_OTHER_USER_INFO") {
         state = {
             ...state,
+            // don't want to pass the pwd, filtering it in these lines below
             otherUserInfo: Object.keys(action.otherUserInfo)
                 .filter((key) =>
                     ["id", "first", "last", "profile_pic", "bio"].includes(key)
@@ -115,6 +116,20 @@ export default function reducer(state = {}, action) {
         state = {
             ...state,
             chatState: action.chatHidden,
+        };
+    }
+
+    if (action.type == "GET_PM_USERS") {
+        state = {
+            ...state,
+            pmUsers: action.pmUsers,
+        };
+    }
+
+    if (action.type == "GET_MESSAGES_W_USER") {
+        state = {
+            ...state,
+            messagesWithUser: action.messagesWithUser,
         };
     }
 

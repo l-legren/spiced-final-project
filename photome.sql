@@ -53,3 +53,5 @@ CREATE UNIQUE INDEX ON friendship (least(requester_id, receiver_id), greatest(re
 -- INSERT INTO friendship (requester_id, receiver_id, friendship) VALUES (7, 8, true);
 
 -- INSERT INTO chat_messages (id, message, user_id) VALUES
+
+-- INSERT INTO messages (emitter_id, receiver_id, message) VALUES (20, 201, thisis a cool message);

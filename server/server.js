@@ -8,7 +8,7 @@ process.env.NODE_ENV === "production"
 const cookieSession = require("cookie-session");
 const db = require("./db.js");
 const dbf = require("./friendship-db");
-const dbc = require("./chat-db");
+const dbm = require("./messages-db");
 // csurf create tokens in the requests objects!!
 const csurf = require("csurf");
 const { hash, compare } = require("./bc.js");
@@ -318,6 +318,19 @@ app.get("/log-out", (req, res) => {
     });
 });
 
+app.get("/get-private-messages", (req, res) => {
+    dbm.getUsersWithMessages(req.session.userId)
+        .then(({ rows }) => {
+            console.log("Users with messages", rows);
+            res.json(rows);
+        })
+        .catch((err) => console.log("Error query private messages users", err));
+});
+
+app.get('/msg-w-user/:user') {
+    console.log('Params',req.params)
+}
+
 // app.get("/get-most-recent-users", (req, res) => {
 //     console.log("request done");
 //     db.threeMostRecent()
@@ -438,8 +451,6 @@ io.on("connection", (socket) => {
     if (!userId) {
         return socket.disconnect(true);
     }
-
-    
 
     // onlineUsers[socket.id] = userId;
 
