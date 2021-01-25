@@ -13,7 +13,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
-import { chatVisibility, getPmUsers } from "./actions";
+import { chatVisibility, getPmUsers, getMessagesWithUser } from "./actions";
 import { useEffect } from "react";
 import ChatLayout from "./chatlayout";
 
@@ -44,9 +44,9 @@ const PrivateMessages = () => {
     const dispatch = useDispatch();
 
     const pmUsers = useSelector((state) => (state && state.pmUsers) || []);
-
     const selectUser = (e) => {
-        console.log("click works", e.target);
+        console.log("click works", e);
+        dispatch(getMessagesWithUser(e));
     };
 
     useEffect(() => {
@@ -57,30 +57,35 @@ const PrivateMessages = () => {
         <div>
             <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={4} lg={3}>
-                    <List>
-                        {pmUsers.map((user) => {
-                            return (
-                                <>
-                                    <ListItem
-                                        key={user.id}
-                                        onClick={(e) => selectUser(e)}
-                                        data-my-value={user.id}
-                                    >
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                src={user.profile_pic}
-                                                alt={`${user.first} ${user.last}`}
+                    <Box flexGrow={1}>
+                        <List>
+                            {pmUsers.map((user, idx) => {
+                                return (
+                                    <div key={idx}>
+                                        <ListItem
+                                            key={user.id}
+                                            onClick={() => selectUser(user.id)}
+                                            data-my-value={user.id}
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    src={user.profile_pic}
+                                                    alt={`${user.first} ${user.last}`}
+                                                />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={`${user.first} ${user.last}`}
                                             />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={`${user.first} ${user.last}`}
+                                        </ListItem>
+                                        <Divider
+                                            variant="inset"
+                                            component="li"
                                         />
-                                    </ListItem>
-                                    <Divider variant="inset" component="li" />
-                                </>
-                            );
-                        })}
-                    </List>
+                                    </div>
+                                );
+                            })}
+                        </List>
+                    </Box>
                 </Grid>
                 {/* <Divider orientation="vertical" flexItem></Divider> */}
                 <Grid item xs={12} sm={12} md={8} lg={9}>

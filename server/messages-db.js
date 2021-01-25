@@ -4,14 +4,14 @@ const db = spicedPg(
         "postgres:postgres:postgres@localhost:5432/photome"
 );
 
-// module.exports.newMessage = (emitter_id, receiver_id, message) => {
-//     const q = `INSERT INTO messages(emitter_id, receiver_id, message)
-//     VALUES ($1, $2, $3)
-//     RETURNING emitter_id, message`;
-//     const params = [emitter_id, receiver_id, message];
+module.exports.newMessage = (emitter_id, receiver_id, message) => {
+    const q = `INSERT INTO messages(emitter_id, receiver_id, message)
+    VALUES ($1, $2, $3)
+    RETURNING emitter_id, message`;
+    const params = [emitter_id, receiver_id, message];
 
-//     return db.query(q, params);
-// };
+    return db.query(q, params);
+};
 
 // module.exports.getTenMostRecentMessages = () => {
 //     const q = `SELECT first, last, profile_pic, timestamp, message
@@ -27,13 +27,13 @@ const db = spicedPg(
 // };
 
 module.exports.getMessagesWithUser = (logged_user, third_user) => {
-    const q = `SELECT first, last, profile_pic, message, timestamp 
+    const q = `SELECT users.id, first, last, profile_pic, message, timestamp 
     FROM users
     LEFT OUTER JOIN messages
     ON (users.id = messages.emitter_id)
     WHERE (emitter_id = ($1) AND receiver_id = $2)
     OR (emitter_id = ($2) AND receiver_id = $1)
-    ORDER BY timestamp DESC`;
+    ORDER BY timestamp ASC`;
 
     const params = [logged_user, third_user];
     return db.query(q, params);

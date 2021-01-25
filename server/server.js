@@ -327,9 +327,15 @@ app.get("/get-private-messages", (req, res) => {
         .catch((err) => console.log("Error query private messages users", err));
 });
 
-app.get('/msg-w-user/:user') {
-    console.log('Params',req.params)
-}
+app.get("/msg-w-user/:user", (req, res) => {
+    console.log("Params", req.params);
+    const { user } = req.params;
+    dbm.getMessagesWithUser(req.session.userId, user)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => console.log("Error getting messages wiht user", err));
+});
 
 // app.get("/get-most-recent-users", (req, res) => {
 //     console.log("request done");
@@ -468,19 +474,25 @@ io.on("connection", (socket) => {
     // dbc.getTenMostRecentMessages().then(({ rows }) => {
     //     socket.emit("most recent messages", rows);
     // });
-    // // Add a new message to the chatroom
-    // socket.on("new chat message", (message) => {
-    //     dbc.newMessage(userId, message)
-    //         .then(({ rows }) => {
-    //             dbc.getUserWithMessage(rows[0].message).then(({ rows }) => {
-    //                 console.log("These are fields after double query", rows[0]);
-    //                 io.sockets.emit("new message and user", rows[0]);
-    //             });
-    //         })
-    //         .catch((err) =>
-    //             console.log("Error while getting message user info", err)
-    //         );
-    // });
+
+    // Add a new message to the chatroom
+    socket.on("new chat message", (object) => {
+        const { message, ids } = object;
+        const thirdUserId = ids.find((id) => id != userId);
+        console.log(thirdUserId);
+        dbm.newMessage(userId, thirdUserId, message)
+            .then(({ rows }) => {
+                console.log(rows);
+                //     dbc.getUserWithMessage(rows[0].message).then(({ rows }) => {
+                //         console.log("These are fields after double query", rows[0]);
+                //         io.sockets.emit("new message and user", rows[0]);
+                //     });
+            })
+            .catch((err) =>
+                console.log("Error while getting message user info", err)
+            );
+    });
+
     // // DISCONNECT FROM usersConnected
     // socket.on("disconnect", () => {
     //     console.log("Array before deleting", arrOfIds);

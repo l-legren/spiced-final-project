@@ -220,12 +220,12 @@ export async function getMessagesWithUser(user_id) {
 //     };
 // }
 
-// export function addNewMessage(newMessage) {
-//     return {
-//         type: "ADD_NEW_MESSAGE",
-//         newMessage: newMessage,
-//     };
-// }
+export function addNewPrivateMessage(newMessage) {
+    return {
+        type: "ADD_NEW_MESSAGE",
+        newMessage: newMessage,
+    };
+}
 
 // export function currentConnectedUsers(connectedUsers) {
 //     return {

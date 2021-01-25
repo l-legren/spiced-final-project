@@ -1,10 +1,6 @@
 import io from "socket.io-client";
 import {
-    storeChatMessages,
-    addNewMessage,
-    currentConnectedUsers,
-    addConnectedUser,
-    connectedUsersAfterUserLeaving
+
 } from "./actions";
 
 export let socket;
