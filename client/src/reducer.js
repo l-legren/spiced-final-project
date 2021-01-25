@@ -105,17 +105,10 @@ export default function reducer(state = {}, action) {
 
     // CHAT MESSAGING
 
-    if (action.type == "CHAT_ON") {
+    if (action.type == "FIRST_MESSAGE_ON") {
         state = {
             ...state,
-            chatState: action.chatVisible,
-        };
-    }
-
-    if (action.type == "CHAT_OFF") {
-        state = {
-            ...state,
-            chatState: action.chatHidden,
+            modalFirstMessage: action.modalFirstMessage,
         };
     }
 

@@ -1,7 +1,10 @@
-
+* {
+    box-sizing: border-box;
+}
 
 
 body {
     background-color: ghostwhite;
+    height: 100%
     /* font-family: 'Roboto', sans-serif; */
 }

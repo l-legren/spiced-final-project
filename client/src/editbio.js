@@ -29,7 +29,6 @@ const EditBio = () => {
             defaultValue={bio ? bio : ""}
             multiline
             rows={2}
-            rowsMax={4}
             onChange={(e) => setBio(e.target.value)}
         />
     );

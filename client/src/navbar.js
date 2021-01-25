@@ -1,13 +1,11 @@
 import {
-    makeStyles,
     Typography,
-    Button,
     AppBar,
     Toolbar,
     IconButton,
     Avatar,
+    makeStyles
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -17,7 +15,11 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     offset: theme.mixins.toolbar,
-    menuButton: {
+    mytoolBar: {
+        backgroundColor: 'black',
+        color: 'white'
+    },
+    buttons: {
         marginRight: theme.spacing(2),
     },
     title: {
@@ -43,17 +45,10 @@ const NavBar = () => {
             <AppBar
                 position="fixed"
                 variant="dense"
-                aria-label=""
-                color="primary"
+                aria-label="upper-bar"
+                color="secondary"
             >
-                <Toolbar>
-                    <IconButton
-                        aria-label="menu"
-                        className={classes.menuButton}
-                        color="inherit"
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                <Toolbar className={classes.mytoolBar}>
                     <Typography variant="h6" className={classes.title}>
                         photoMe
                     </Typography>
@@ -64,19 +59,24 @@ const NavBar = () => {
                             "./default.jpg"
                         }
                         alt="users profile picture"
+                        className={classes.buttons}
                     ></Avatar>
-                    <IconButton aria-label="home" color="inherit">
-                        <HomeIcon />
+                    <IconButton aria-label="home" color="inherit" href="/">
+                        <HomeIcon className={classes.buttons} />
                     </IconButton>
-                    <IconButton aria-label="pm" color="inherit">
-                        <ChatBubbleOutlineIcon />
+                    <IconButton
+                        aria-label="pm"
+                        color="inherit"
+                        href="/messages"
+                    >
+                        <ChatBubbleOutlineIcon  className={classes.buttons} />
                     </IconButton>
                     <IconButton
                         aria-label="logout"
                         color="inherit"
                         onClick={handleLogOut}
                     >
-                        <ExitToAppIcon />
+                        <ExitToAppIcon className={classes.buttons} />
                     </IconButton>
                 </Toolbar>
             </AppBar>

@@ -16,11 +16,10 @@ import { getUserInfo } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import OtherUser from "./other-user";
 import PrivateMessages from "./pmlayout";
+import Prueba from "./prueba";
 
 const App = () => {
     const dispatch = useDispatch();
-
-    const theme = createMuiTheme();
 
     useEffect(() => {
         dispatch(getUserInfo());
@@ -29,9 +28,7 @@ const App = () => {
     return (
         <>
             <BrowserRouter>
-                <ThemeProvider theme={theme}>
-                    <NavBar />
-                </ThemeProvider>
+                <NavBar />
 
                 <Route exact path="/" render={() => <Profile />} />
                 <Route
@@ -39,6 +36,7 @@ const App = () => {
                     render={(props) => <OtherUser props={props} />}
                 />
                 <Route path="/messages" render={() => <PrivateMessages />} />
+                <Route path="/prueba" render={() => <Prueba />} />
             </BrowserRouter>
         </>
     );

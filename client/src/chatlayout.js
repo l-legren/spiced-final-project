@@ -79,13 +79,12 @@ const ChatLayout = () => {
     );
 
     return (
-        <>
+        <div >
             <Grid container spacing={1} direction="column">
                 <Grid
                     item
                     style={{
                         display: "flex",
-                        flexGrow: 1,
                         flexDirection: "column",
                         position: "relative",
                         bottom: 0,
@@ -111,7 +110,6 @@ const ChatLayout = () => {
                     <TextField
                         className={classes.myText}
                         variant="outlined"
-                        fullWidth
                         defaultValue=""
                         multiline
                         rows={2}
@@ -120,7 +118,7 @@ const ChatLayout = () => {
                     />
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 };
 

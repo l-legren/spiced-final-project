@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, IconButton } from "@material-ui/core";
+import { Grid, Typography, Box, IconButton, makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addOtherUserInfo, chatVisibility } from "./actions.js";
@@ -7,13 +7,33 @@ import OtherUserImageBoard from "./other-user-imageboard";
 import CameraIcon from "@material-ui/icons/Camera";
 import { flexbox } from "@material-ui/system";
 import ChatLayout from "./pmlayout.js";
+import { modalFirstMessage } from "./actions";
+import FirstMessageDialog from "./firstmessage";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: 5,
+        background: "#f2f2f2",
+        color: "black",
+        borderRadius: 5,
+    },
+    buttons: {
+        margin: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+}));
 
 const OtherUser = ({ props }) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const userInfo = useSelector(
         (state) => (state && state.otherUserInfo) || {}
     );
-    const chatState = useSelector((state => state && state.chatState || false));
+    const chatState = useSelector(
+        (state) => (state && state.chatState) || false
+    );
 
     // const [chatVisible, setChatVisible] = useState(false);
     const [userInDatabase, setUserInDatabase] = useState(true);
@@ -37,15 +57,20 @@ const OtherUser = ({ props }) => {
             );
     }, []);
 
-    const handleClick = () => {
-        console.log("click works");
-        // setChatVisible(true);
-        dispatch(chatVisibility(true));
+    const handleClickOpen = () => {
+        dispatch(modalFirstMessage(true));
     };
 
     return (
         <>
-            <Grid container spacing={1} display="flex" justify="center">
+            <FirstMessageDialog />
+            <Grid
+                container
+                spacing={1}
+                display="flex"
+                justify="center"
+                className={classes.root}
+            >
                 <Grid item xs={12} md={3} lg={3}>
                     <Grid item>
                         <img
@@ -90,7 +115,7 @@ const OtherUser = ({ props }) => {
                                 aria-label=""
                                 variant="contained"
                                 color="primary"
-                                onClick={handleClick}
+                                onClick={handleClickOpen}
                             >
                                 <CameraIcon /> Contact me
                             </IconButton>

@@ -106,10 +106,10 @@ export async function getOtherUserImageboard(id) {
 
 // PRIVATE CHAT
 
-export function chatVisibility(bool) {
+export function modalFirstMessage(bool) {
     return {
-        type: "CHAT_ON",
-        chatVisible: bool,
+        type: "FIRST_MESSAGE_ON",
+        modalFirstMessage: bool,
     };
 }
 

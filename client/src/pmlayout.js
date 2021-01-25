@@ -17,30 +17,8 @@ import { chatVisibility, getPmUsers, getMessagesWithUser } from "./actions";
 import { useEffect } from "react";
 import ChatLayout from "./chatlayout";
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        bottom: 5,
-        right: 5,
-        height: "auto",
-        position: "fixed",
-        border: "2px solid black",
-        borderRadius: "5px",
-    },
-    bubbleContainer: {
-        width: "100%",
-        display: "flex",
-    },
-    bubble: {
-        border: "0.5px solid black",
-        borderRadius: "10px",
-        margin: "5px",
-        padding: "10px",
-        display: "inline-block",
-    },
-}));
 
 const PrivateMessages = () => {
-    const classes = useStyles();
     const dispatch = useDispatch();
 
     const pmUsers = useSelector((state) => (state && state.pmUsers) || []);
@@ -55,9 +33,9 @@ const PrivateMessages = () => {
 
     return (
         <div>
-            <Grid container spacing={1}>
-                <Grid item xs={12} sm={12} md={4} lg={3}>
-                    <Box flexGrow={1}>
+            <Grid container spacing={1} >
+                <Grid item xs={12} sm={12} md={4} lg={3} >
+                    <Box >
                         <List>
                             {pmUsers.map((user, idx) => {
                                 return (
