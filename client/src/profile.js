@@ -8,12 +8,12 @@ import { getUserInfo, addBio, picModalVisible } from "./actions";
 import EditBio from "./editbio";
 import Uploader from "./uploader";
 import UserImageBoard from "./user-imageboard";
-import { ImageList, ImageListItem, makeStyles } from "@material-ui/core";
+import { ImageList, ImageListItem, makeStyles, Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: 5,
-        background: "#f2f2f2",
+        background: "#adb6c4",
         color: "black",
         borderRadius: 5,
     },
@@ -66,6 +66,7 @@ const Profile = () => {
                     <EditBio />
                 </Grid>
             </Grid>
+            <Divider variant="middle" />
             <UserImageBoard />
         </>
     );

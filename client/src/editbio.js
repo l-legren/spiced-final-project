@@ -1,4 +1,4 @@
-import { Typography, Button, Grid, TextField } from "@material-ui/core";
+import { Typography, Button, Grid, TextField, Divider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import instance from "./axios";
@@ -38,6 +38,11 @@ const EditBio = () => {
             <Typography variant="h4" color="initial">
                 {profileInfo.first} {profileInfo.last}
             </Typography>
+            <Divider variant="middle" />
+            <Typography variant="subtitle1" color="initial">
+                {profileInfo.city}. {profileInfo.photographer ? "Photographer" : "Model"} 
+            </Typography>
+            <Divider variant="middle" />
             {profileInfo.bio ? (
                 <>
                     <Typography variant="subtitle1" color="initial">

@@ -7,7 +7,6 @@ process.env.NODE_ENV === "production"
     : (secrets = require("./secrets"));
 const cookieSession = require("cookie-session");
 const db = require("./db.js");
-const dbf = require("./friendship-db");
 const dbm = require("./messages-db");
 // csurf create tokens in the requests objects!!
 const csurf = require("csurf");
@@ -353,117 +352,21 @@ app.post("/add-first-message", (req, res) => {
         .catch((err) => console.log("Error storing the first pm in DB", err));
 });
 
-// app.get("/get-most-recent-users", (req, res) => {
-//     console.log("request done");
-//     db.threeMostRecent()
-//         .then(({ rows }) => {
-//             console.log("3 most recent users: ", rows);
-//             res.json(rows);
-//         })
-//         .catch((err) => {
-//             console.log("Error in db query: ".err);
-//             res.json({
-//                 success: false,
-//             });
-//         });
-// });
-
-// app.get("/users-match/:match", (req, res) => {
-//     const { match } = req.params;
-//     console.log(match);
-//     db.matchUsers(match)
-//         .then(({ rows }) => {
-//             console.log("Matched Users: ", rows);
-//             res.json(rows);
-//         })
-//         .catch((err) => {
-//             console.log("Error in db request: ", err);
-//             res.json({
-//                 success: false,
-//             });
-//         });
-// });
-
-// app.get("/friend-request/:other", (req, res) => {
-//     const { other } = req.params;
-//     dbf.areFriends(other, req.session.userId)
-//         .then(({ rows }) => {
-//             res.json(rows);
-//         })
-//         .catch((err) => console.log("Error fetching from db: ", err));
-// });
-
-// app.post("/change-status", (req, res) => {
-//     console.log(req.body);
-//     const { otherUserId, status } = req.body;
-
-//     if (
-//         status == TEXT_BUTTON.FRIENDS ||
-//         status == TEXT_BUTTON.PENDING_REQUEST
-//     ) {
-//         dbf.unfriend(req.session.userId, otherUserId)
-//             .then(() => {
-//                 console.log("Removed from friends");
-//                 res.json({
-//                     status: TEXT_BUTTON.NO_FRIENDS,
-//                 });
-//             })
-//             .catch((err) => console.log("Error removing from DB: ", err));
-//     } else if (status == TEXT_BUTTON.NO_FRIENDS) {
-//         dbf.requestFriendship(req.session.userId, otherUserId)
-//             .then(() => {
-//                 console.log("Friend request sent!");
-//                 res.json({
-//                     status: TEXT_BUTTON.PENDING_REQUEST,
-//                 });
-//             })
-//             .catch((err) =>
-//                 console.log("Error requesting friendship in DB: ", err)
-//             );
-//     } else if (status == TEXT_BUTTON.ACCEPT_FRIENDSHIP) {
-//         dbf.acceptRequest(otherUserId, req.session.userId)
-//             .then(() => {
-//                 console.log("Friendship request accepted");
-//                 res.json({
-//                     status: TEXT_BUTTON.FRIENDS,
-//                 });
-//             })
-//             .catch((err) =>
-//                 console.log("Error accepting friendship in DB: ", err)
-//             );
-//     }
-// });
-
-// app.post("/reject-request", (req, res) => {
-//     const { reject, otherUserId } = req.body;
-//     if (reject) {
-//         dbf.unfriend(req.session.userId, otherUserId)
-//             .then(() => {
-//                 console.log("Removed from Database");
-//                 res.json({
-//                     success: true,
-//                 });
-//             })
-//             .catch((err) => console.log("Error removing from Database: ", err));
-//     }
-// });
-
-// app.get("/get-friends/:id", (req, res) => {
-//     const { id } = req.params;
-//     dbf.getFriends(id).then(({ rows }) => {
-//         // console.log("THESE ARE FRIENDS: ", rows);
-//         res.json(rows);
-//     });
-// });
-
-// app.get("/get-requesters/:id", (req, res) => {
-//     console.log("working on the server: ", req.params);
-//     const { id } = req.params;
-//     dbf.getRequesters(id).then(({ rows }) => {
-//         console.log("THESE ARE THE REQUESTERS: ", rows);
-//         res.json(rows);
-//     });
-// });
+app.get("/users-match/:match", (req, res) => {
+    const { match } = req.params;
+    console.log(match);
+    db.matchUsers(match)
+        .then(({ rows }) => {
+            console.log("Matched Users: ", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("Error in db request: ", err);
+            res.json({
+                success: false,
+            });
+        });
+});
 
 // let onlineUsers = {};
 

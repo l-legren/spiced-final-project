@@ -1,4 +1,4 @@
-import { Button, Box, Grid } from "@material-ui/core";
+import { Button, Box, Grid, Divider, makeStyles } from "@material-ui/core";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import { useEffect, useState } from "react";
@@ -6,7 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { imageboardModalVisible, getUserImageboard } from "./actions";
 import UploaderImageboard from "./uploader-imageboard";
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: 5,
+        background: "#f2f2f2",
+        color: "black",
+        borderRadius: 5,
+    },
+    button: {
+        background: "black",
+        color: "#f2f2f2",
+    },
+}));
+
 const UserImageBoard = () => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const userImageboard = useSelector(
         (state) => (state && state.imageboardPicsUser) || []
@@ -24,6 +38,7 @@ const UserImageBoard = () => {
         <>
             <Box sx={{ display: "flex", justifyContent: "center", padding: 5 }}>
                 <Button
+                    className={classes.button}
                     variant="contained"
                     color="primary"
                     onClick={handleClickOpen}
@@ -31,8 +46,9 @@ const UserImageBoard = () => {
                     UPLOAD IMAGE
                 </Button>
             </Box>
+            <Divider variant="middle" />
             <UploaderImageboard />
-            <Grid container spacing={1}>
+            <Grid container spacing={1} className={classes.root}>
                 <Grid item md={1} lg={1}>
                     <div></div>
                 </Grid>

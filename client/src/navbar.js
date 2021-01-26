@@ -12,10 +12,12 @@ import HomeIcon from "@material-ui/icons/Home";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SearchIcon from "@material-ui/icons/Search";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import instance from "./axios";
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { usersInCity } from "./actions";
+import { CityUsers } from "./cityusers";
 
 const useStyles = makeStyles((theme) => ({
     offset: theme.mixins.toolbar,
@@ -72,10 +74,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavBar = () => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const profileInfo = useSelector((state) => (state && state.userInfo) || {});
 
     const [value, setValue] = useState("");
+    const [redirect, setRedirect] = useState(false);
 
     const handleLogOut = () => {
         console.log("clicking works");
@@ -86,12 +90,18 @@ const NavBar = () => {
 
     const handleKeyDown = (e) => {
         if (e.key == "Enter") {
-            console.log("enter pressed");
+            // console.log("enter pressed", value);
+            instance.get(`/users-match/${value}`).then(({ data }) => {
+                console.log("Users in city", data);
+                dispatch(usersInCity(data));
+                setRedirect(true);
+            });
         }
     };
 
     return (
         <>
+            {redirect && <Redirect to="/city-users" />}
             <AppBar
                 position="fixed"
                 variant="dense"

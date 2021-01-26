@@ -16,6 +16,7 @@ import { getUserInfo } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import OtherUser from "./other-user";
 import PrivateMessages from "./pmlayout";
+import CityUsers from "./cityusers";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const App = () => {
                     render={(props) => <OtherUser props={props} />}
                 />
                 <Route path="/messages" render={() => <PrivateMessages />} />
+                <Route path="/city-users" render={() => <CityUsers />} />
             </BrowserRouter>
         </Box>
     );
