@@ -23,6 +23,15 @@ module.exports.newCode = (code, email) => {
     return db.query(q, params);
 };
 
+module.exports.addImageboardPic = (userId, url) => {
+    const q = `INSERT INTO imageboard (user_id, url)
+    VALUES ($1, $2)
+    RETURNING user_id, url, timestamp`;
+    const params = [userId, url];
+
+    return db.query(q, params);
+};
+
 // FETCHING DATA FROM DATABASE
 
 module.exports.getPassword = (email) => {
@@ -72,6 +81,15 @@ module.exports.matchUsers = (val) => {
     return db.query(q, params);
 };
 
+module.exports.getUserImageboard = (id) => {
+    const q = `SELECT * FROM imageboard
+    WHERE user_id = $1
+    ORDER BY timestamp ASC`;
+    const params = [id];
+
+    return db.query(q, params);
+};
+
 // UPDATING
 
 module.exports.updatePassword = (email, password) => {
@@ -103,20 +121,13 @@ module.exports.updateBio = (bio, id) => {
     return db.query(q, params);
 };
 
-module.exports.addImageboardPic = (userId, url) => {
-    const q = `INSERT INTO imageboard (user_id, url)
-    VALUES ($1, $2)
-    RETURNING user_id, url, timestamp`;
-    const params = [userId, url];
-
-    return db.query(q, params);
-};
-
-module.exports.getUserImageboard = (id) => {
-    const q = `SELECT * FROM imageboard
-    WHERE user_id = $1
-    ORDER BY timestamp ASC`;
-    const params = [id];
+module.exports.updateReg = (id, city, model, photographer) => {
+    const q = `UPDATE users
+    SET city = $2, 
+        model = $3, 
+        photographer = $4
+    WHERE id = $1`;
+    const params = [id, city, model, photographer];
 
     return db.query(q, params);
 };

@@ -33,8 +33,10 @@ const UserImageBoard = () => {
             </Box>
             <UploaderImageboard />
             <Grid container spacing={1}>
-                <Grid item xs={0} sm={0} md={1} lg={3}></Grid>
-                <Grid item xs={12} sm={12} md={10} lg={6}>
+                <Grid item md={1} lg={1}>
+                    <div></div>
+                </Grid>
+                <Grid item xs={12} sm={12} md={10} lg={10}>
                     <ImageList variant="masonry" cols={3} gap={8}>
                         {userImageboard.map((pic, idx) => {
                             return (
@@ -48,7 +50,9 @@ const UserImageBoard = () => {
                         })}
                     </ImageList>
                 </Grid>
-                <Grid item xs={0} sm={0} md={1} lg={3}></Grid>
+                <Grid item md={1} lg={1}>
+                    <div></div>
+                </Grid>
             </Grid>
         </>
     );

@@ -19,7 +19,7 @@ const OtherUserImageBoard = ({ props }) => {
     return (
         <>
             <Grid container spacing={1}>
-                <Grid item md={1} lg={2}></Grid>
+                <Grid item xs={0} sm={0} md={1} lg={2}></Grid>
                 <Grid item xs={12} sm={12} md={10} lg={8}>
                     {otherUserImageboard.length == 0 && (
                         <>
@@ -51,7 +51,7 @@ const OtherUserImageBoard = ({ props }) => {
                         })}
                     </ImageList>
                 </Grid>
-                <Grid item md={1} lg={2}></Grid>
+                <Grid item xs={0} sm={0} md={1} lg={2}></Grid>
             </Grid>
         </>
     );

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 5,
         background: "#f2f2f2",
         color: "black",
-        borderRadius: 5
+        borderRadius: 5,
     },
     buttons: {
         margin: theme.spacing(2),
@@ -44,19 +44,25 @@ const Profile = () => {
                 justify="center"
                 className={classes.root}
             >
-                <Grid item xs={12} md={3} lg={3}>
-                    <img
-                        src={
-                            (profileInfo.profile_pic &&
-                                profileInfo.profile_pic) ||
-                            "./default.jpg"
-                        }
-                        alt="users profile picture"
-                        style={{ width: 250, height: 250, objectFit: 'cover' }}
-                        onClick={handleClickOpen}
-                    ></img>
+                <Grid item xs={12} sm={12} md={3} lg={3}>
+                    <a style={{ cursor: "pointer" }}>
+                        <img
+                            src={
+                                (profileInfo.profile_pic &&
+                                    profileInfo.profile_pic) ||
+                                "./default.jpg"
+                            }
+                            alt="users profile picture"
+                            style={{
+                                width: 250,
+                                height: 250,
+                                objectFit: "cover",
+                            }}
+                            onClick={handleClickOpen}
+                        ></img>
+                    </a>
                 </Grid>
-                <Grid item xs={12} md={9} lg={9}>
+                <Grid item xs={12} sm={12} md={9} lg={9}>
                     <EditBio />
                 </Grid>
             </Grid>

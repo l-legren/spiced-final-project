@@ -84,6 +84,12 @@ const NavBar = () => {
         });
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key == "Enter") {
+            console.log("enter pressed");
+        }
+    };
+
     return (
         <>
             <AppBar
@@ -102,7 +108,8 @@ const NavBar = () => {
                         </div>
                         <InputBase
                             placeholder="Search…"
-                            onchange={(e) => setValue(e.target.value)}
+                            onChange={(e) => setValue(e.target.value)}
+                            onKeyDown={(e) => handleKeyDown(e)}
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,

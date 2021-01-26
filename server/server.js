@@ -115,6 +115,14 @@ app.post("/registration", (req, res) => {
         );
 });
 
+app.post("/reg-second-step", (req, res) => {
+    console.log(req.body);
+    const { id, city, model, photographer } = req.body;
+    db.updateReg(id, city, model, photographer)
+        .then(() => console.log("Reg 2 stored in db"))
+        .catch((err) => console.log("Error storing in DB", err));
+});
+
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     db.getPassword(email).then(({ rows }) => {

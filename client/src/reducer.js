@@ -11,7 +11,16 @@ export default function reducer(state = {}, action) {
             ...state,
             userInfo: Object.keys(action.userInfo)
                 .filter((key) =>
-                    ["id", "first", "last", "profile_pic", "bio"].includes(key)
+                    [
+                        "id",
+                        "first",
+                        "last",
+                        "profile_pic",
+                        "bio",
+                        "model",
+                        "photographer",
+                        "city",
+                    ].includes(key)
                 )
                 .reduce((obj, key) => {
                     obj[key] = action.userInfo[key];

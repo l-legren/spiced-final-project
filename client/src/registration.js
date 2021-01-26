@@ -27,17 +27,15 @@ const Registration = () => {
     const [password, setPassword] = useState("");
     const [view, setView] = useState(1);
     const [error, setError] = useState(false);
+    const [userId, setUserId] = useState("");
 
     // VIEW 2
     const [city, setCity] = useState("");
-    const [model, setModel] = useState(false);
-    const [photographer, setPhotographer] = useState(false);
     const [value, setValue] = useState("model");
 
     const handleClickAndView = () => {
         console.log("Clicking works!!!");
         let obj = {
-            ...obj,
             first: first,
             last: last,
             email: email,
@@ -48,6 +46,7 @@ const Registration = () => {
             .then(({ data }) => {
                 console.log("This is data from Databse: ", data);
                 setView(2);
+                setUserId(data.id);
                 setError(false);
             })
             .catch((err) => {
@@ -57,24 +56,24 @@ const Registration = () => {
     };
 
     const handleSubmit = () => {
-        console.log("Clicking works!!!");
         let obj = {
+            id: userId,
             city: city,
-            model: model,
-            photographer: photographer,
+            model: value == "model" ? true : false,
+            photographer: value == "photographer" ? true : false,
         };
+        console.log("Clicking works!!!", obj);
         instance
-            .post("/registration-second", obj)
-            .then(({ data }) => {
-                console.log("This is data from Databse: ", data);
-                location.replace("/");
+            .post("/reg-second-step", obj)
+            .then(() => {
+                console.log("This is data from Databse: ");
                 setError(false);
+                location.replace("/");
             })
             .catch((err) => {
                 console.log("Error sending post to the server: ", err);
                 setError(true);
             });
-        console.log("This is my final object", obj);
     };
 
     return view == 1 ? (
@@ -174,7 +173,7 @@ const Registration = () => {
                                 label="City"
                                 type="text"
                                 variant="standard"
-                                // onChange={(e) => setCity(e.target.value)}
+                                onChange={(e) => setCity(e.target.value)}
                                 required
                             ></TextField>
                         </Grid>
@@ -204,7 +203,7 @@ const Registration = () => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                type="submit"
+                                type="button"
                                 onClick={handleSubmit}
                             >
                                 SUBMIT
