@@ -7,11 +7,17 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { modalFirstMessage } from "./actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import instance from "./axios";
 
-export default function FirstMessageDialog() {
-    const firstMessage = useSelector(
+export default function FirstMessageDialog({ props }) {
+    const [firstMessage, setFirstMessage] = useState("");
+
+    const modalFirstMessage = useSelector(
         (state) => (state && state.modalFirstMessage) || false
+    );
+    const userFirstMessage = useSelector(
+        (state) => (state && state.firstMessage) || ""
     );
     const dispatch = useDispatch();
 
@@ -20,13 +26,20 @@ export default function FirstMessageDialog() {
     };
 
     const handleSubmit = () => {
-        console.log("submit button works");
+        instance
+            .post("/add-first-message", {
+                msg: firstMessage,
+                user_id: props.match.params.id,
+            })
+            .then(() => {
+            });
+        location.replace("/messages");
     };
 
     return (
         <div>
             <Dialog
-                open={firstMessage}
+                open={modalFirstMessage}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-title"
             >
@@ -35,11 +48,17 @@ export default function FirstMessageDialog() {
                     <DialogContentText>
                         Send your first message to user
                     </DialogContentText>
-                    <TextField autoFocus variant="outlined" />
+                    <TextField
+                        autoFocus
+                        variant="outlined"
+                        onChange={(e) => setFirstMessage(e.target.value)}
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button variant='contained' onClick={handleSubmit}>Contact me!</Button>
+                    <Button variant="contained" onClick={handleSubmit}>
+                        Contact me!
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -140,6 +140,9 @@ export async function getMessagesWithUser(user_id) {
     };
 }
 
+// FIND USERS
+
+
 // FRIENDS, REQUESTERS AND OPEN REQUESTS
 
 // export async function getFriends(id) {

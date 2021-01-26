@@ -13,23 +13,25 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
     myText: {
         position: "fixed",
+        width: "inherit",
         bottom: 5,
         right: 5,
-        left: 5,
     },
     bubbleUser: {
         display: "inline-block",
-        background: "red",
+        background: "#ff9933",
         color: "white",
         padding: 10,
         margin: 5,
+        borderRadius: 5,
     },
     bubbleThird: {
         display: "inline-block",
-        background: "blue",
+        background: "#0099ff",
         color: "white",
         padding: 10,
         margin: 5,
+        borderRadius: 5,
     },
 }));
 
@@ -79,7 +81,7 @@ const ChatLayout = () => {
     );
 
     return (
-        <div >
+        <div>
             <Grid container spacing={1} direction="column">
                 <Grid
                     item
@@ -87,7 +89,7 @@ const ChatLayout = () => {
                         display: "flex",
                         flexDirection: "column",
                         position: "relative",
-                        bottom: 0,
+                        justifyContent: "flex-end",
                     }}
                 >
                     {messages.map((msg, idx) => {
@@ -106,7 +108,10 @@ const ChatLayout = () => {
                         );
                     })}
                 </Grid>
-                <Grid item>
+                <Grid
+                    item
+                    style={{ display: "flex", justifyContent: "center" }}
+                >
                     <TextField
                         className={classes.myText}
                         variant="outlined"
@@ -123,5 +128,3 @@ const ChatLayout = () => {
 };
 
 export default ChatLayout;
-
-//userInfo.id == messagesWithUser.id

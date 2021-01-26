@@ -13,15 +13,27 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
-import { chatVisibility, getPmUsers, getMessagesWithUser } from "./actions";
+import {
+    chatVisibility,
+    getPmUsers,
+    getMessagesWithUser,
+    getUserInfo,
+} from "./actions";
 import { useEffect } from "react";
 import ChatLayout from "./chatlayout";
-
 
 const PrivateMessages = () => {
     const dispatch = useDispatch();
 
     const pmUsers = useSelector((state) => (state && state.pmUsers) || []);
+    var loggedUser = useSelector((state) => (state && state.userInfo) || {});
+
+    function filterUsers(user) {
+        return user.id != loggedUser.id;
+    }
+
+    const filtered = pmUsers.filter(filterUsers);
+
     const selectUser = (e) => {
         console.log("click works", e);
         dispatch(getMessagesWithUser(e));
@@ -29,21 +41,22 @@ const PrivateMessages = () => {
 
     useEffect(() => {
         dispatch(getPmUsers());
+        dispatch(getUserInfo());
     }, []);
 
     return (
         <div>
-            <Grid container spacing={1} >
-                <Grid item xs={12} sm={12} md={4} lg={3} >
-                    <Box >
+            <Grid container spacing={1}>
+                <Grid item xs={12} sm={5} md={4} lg={3}>
+                    <Box sx={{ height: "100vh" }}>
                         <List>
-                            {pmUsers.map((user, idx) => {
+                            {filtered.map((user, idx) => {
                                 return (
                                     <div key={idx}>
                                         <ListItem
                                             key={user.id}
                                             onClick={() => selectUser(user.id)}
-                                            data-my-value={user.id}
+                                            style={{ cursor: "pointer" }}
                                         >
                                             <ListItemAvatar>
                                                 <Avatar
@@ -65,8 +78,7 @@ const PrivateMessages = () => {
                         </List>
                     </Box>
                 </Grid>
-                {/* <Divider orientation="vertical" flexItem></Divider> */}
-                <Grid item xs={12} sm={12} md={8} lg={9}>
+                <Grid item xs={12} sm={7} md={8} lg={9}>
                     <ChatLayout />
                 </Grid>
             </Grid>

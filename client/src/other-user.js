@@ -1,7 +1,13 @@
-import { Grid, Typography, Box, IconButton, makeStyles } from "@material-ui/core";
+import {
+    Grid,
+    Typography,
+    Box,
+    IconButton,
+    makeStyles,
+} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addOtherUserInfo, chatVisibility } from "./actions.js";
+import { addOtherUserInfo, chatVisibility, getPmUsers } from "./actions.js";
 import instance from "./axios.js";
 import OtherUserImageBoard from "./other-user-imageboard";
 import CameraIcon from "@material-ui/icons/Camera";
@@ -59,11 +65,12 @@ const OtherUser = ({ props }) => {
 
     const handleClickOpen = () => {
         dispatch(modalFirstMessage(true));
+        dispatch(getPmUsers());
     };
 
     return (
         <>
-            <FirstMessageDialog />
+            <FirstMessageDialog props={props} />
             <Grid
                 container
                 spacing={1}
@@ -112,12 +119,12 @@ const OtherUser = ({ props }) => {
                                 }}
                             ></Box>
                             <IconButton
-                                aria-label=""
+                                aria-label="reach-out bottom"
                                 variant="contained"
                                 color="primary"
                                 onClick={handleClickOpen}
                             >
-                                <CameraIcon /> Contact me
+                                <CameraIcon /> Reach out
                             </IconButton>
                         </Box>
                     </Grid>

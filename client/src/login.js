@@ -4,10 +4,11 @@ import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
-import { OutlinedInput, Grid, Container } from "@material-ui/core";
+import { TextField, Grid, Container } from "@material-ui/core";
 import instance from "./axios.js";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { TextFieldsRounded } from "@material-ui/icons";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -39,56 +40,61 @@ const Login = () => {
                 variant="h4"
                 color="initial"
                 align="center"
-                paragraph={true}
-                gutterBottom={true}
+                paragraph
+                gutterBottom
             >
                 Log In
             </Typography>
             <br></br>
-            <Container maxWidth="xs" align="center">
-                <Grid container spacing={3} direction="column">
-                    <FormControl>
-                        <FormLabel>Mail</FormLabel>
-                        <OutlinedInput
-                            name="email"
-                            type="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required={true}
-                        ></OutlinedInput>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Password</FormLabel>
-                        <OutlinedInput
-                            name="pwd"
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required={true}
-                        ></OutlinedInput>
-                    </FormControl>
-                    <Grid item spacing={1}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            startIcon={<Icon>arrow_upward</Icon>}
-                            onClick={handleClick}
+            <form>
+                <Container maxWidth="xs" align="center">
+                    <Grid container spacing={3} direction="column">
+                        <Grid item>
+                            <TextField
+                                id="email"
+                                type="email"
+                                label='Mail'
+                                variant="standard"
+                                onChange={(e) => setEmail(e.target.value)}
+                                autoFocus
+                                required
+                            ></TextField>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                variant='standard'
+                                type="password"
+                                label='Password'
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            ></TextField>
+                        </Grid>
+
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                startIcon={<Icon>arrow_upward</Icon>}
+                                onClick={handleClick}
+                            >
+                                Log In
+                            </Button>
+                        </Grid>
+                        <br></br>
+                        <br></br>
+                        <Typography
+                            variant="subtitle1"
+                            color="initial"
+                            align="center"
+                            paragraph
+                            gutterBottom={true}
                         >
-                            Log In
-                        </Button>
+                            <Link to="/reset">Forgot your password?</Link>
+                        </Typography>
                     </Grid>
-                    <br></br>
-                    <br></br>
-                    <Typography
-                        variant="subtitle1"
-                        color="initial"
-                        align="center"
-                        paragraph={true}
-                        gutterBottom={true}
-                    >
-                        <Link to="/reset">Forgot your password?</Link>
-                    </Typography>
-                </Grid>
-            </Container>
+                </Container>
+            </form>
         </>
     );
 };

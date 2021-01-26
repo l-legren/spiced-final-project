@@ -337,6 +337,14 @@ app.get("/msg-w-user/:user", (req, res) => {
         .catch((err) => console.log("Error getting messages wiht user", err));
 });
 
+app.post("/add-first-message", (req, res) => {
+    console.log("adding first message", req.body);
+    const { msg, user_id } = req.body;
+    dbm.addFirstMessage(req.session.userId, user_id, msg)
+        .then(({ rows }) => console.log("First pm stored in DB"))
+        .catch((err) => console.log("Error storing the first pm in DB", err));
+});
+
 // app.get("/get-most-recent-users", (req, res) => {
 //     console.log("request done");
 //     db.threeMostRecent()

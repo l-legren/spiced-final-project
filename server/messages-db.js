@@ -26,6 +26,14 @@ module.exports.newMessage = (emitter_id, receiver_id, message) => {
 //     return db.query(q, params);
 // };
 
+module.exports.addFirstMessage = (logged_user, receiver_id, message) => {
+    const q = `INSERT INTO messages (emitter_id, receiver_id, message)
+    VALUES ($1, $2, $3)`;
+    const params = [logged_user, receiver_id, message];
+
+    return db.query(q, params);
+};
+
 module.exports.getMessagesWithUser = (logged_user, third_user) => {
     const q = `SELECT users.id, first, last, profile_pic, message, timestamp 
     FROM users
@@ -44,7 +52,7 @@ module.exports.getUsersWithMessages = (id) => {
     SELECT DISTINCT users.id, first, last, profile_pic
     FROM users 
     LEFT OUTER JOIN messages
-    ON (users.id = emitter_id)
+    ON (users.id = receiver_id)
     WHERE emitter_id = ($1)
     OR receiver_id = ($1)`;
     const params = [id];

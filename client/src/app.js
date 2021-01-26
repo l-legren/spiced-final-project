@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, Box } from "@material-ui/core";
 import { OutlinedInput, Grid, Container } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useState, useEffect } from "react";
@@ -16,7 +16,6 @@ import { getUserInfo } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import OtherUser from "./other-user";
 import PrivateMessages from "./pmlayout";
-import Prueba from "./prueba";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -26,7 +25,7 @@ const App = () => {
     }, []);
 
     return (
-        <>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
             <BrowserRouter>
                 <NavBar />
 
@@ -36,9 +35,8 @@ const App = () => {
                     render={(props) => <OtherUser props={props} />}
                 />
                 <Route path="/messages" render={() => <PrivateMessages />} />
-                <Route path="/prueba" render={() => <Prueba />} />
             </BrowserRouter>
-        </>
+        </Box>
     );
 };
 

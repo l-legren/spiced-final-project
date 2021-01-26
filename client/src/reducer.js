@@ -112,6 +112,13 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    // if (action.type == "ADD_FIRST_MESSAGE") {
+    //     state = {
+    //         ...state,
+    //         firstMessage: action.message,
+    //     };
+    // }
+
     if (action.type == "GET_PM_USERS") {
         state = {
             ...state,

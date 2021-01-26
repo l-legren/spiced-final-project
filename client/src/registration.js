@@ -4,28 +4,40 @@ import instance from "./axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // MAETRIAL UI
-import { Button } from "@material-ui/core";
+import {
+    Button,
+    FormControl,
+    Radio,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Typography,
+    TextField,
+    Grid,
+    Container,
+} from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormLabel from "@material-ui/core/FormLabel";
-import { OutlinedInput, Grid, Container } from "@material-ui/core";
-
-import { addUserInfo } from "./actions";
 
 const Registration = () => {
     const dispatch = useDispatch();
-
+    // VIEW 1
     const [first, setFirst] = useState("");
     const [last, setLast] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [view, setView] = useState(1);
     const [error, setError] = useState(false);
 
-    const handleClick = () => {
+    // VIEW 2
+    const [city, setCity] = useState("");
+    const [model, setModel] = useState(false);
+    const [photographer, setPhotographer] = useState(false);
+    const [value, setValue] = useState("model");
+
+    const handleClickAndView = () => {
         console.log("Clicking works!!!");
         let obj = {
+            ...obj,
             first: first,
             last: last,
             email: email,
@@ -35,8 +47,7 @@ const Registration = () => {
             .post("/registration", obj)
             .then(({ data }) => {
                 console.log("This is data from Databse: ", data);
-                // dispatch(addUserInfo(data));
-                location.replace("/");
+                setView(2);
                 setError(false);
             })
             .catch((err) => {
@@ -45,74 +56,88 @@ const Registration = () => {
             });
     };
 
-    return (
+    const handleSubmit = () => {
+        console.log("Clicking works!!!");
+        let obj = {
+            city: city,
+            model: model,
+            photographer: photographer,
+        };
+        instance
+            .post("/registration-second", obj)
+            .then(({ data }) => {
+                console.log("This is data from Databse: ", data);
+                location.replace("/");
+                setError(false);
+            })
+            .catch((err) => {
+                console.log("Error sending post to the server: ", err);
+                setError(true);
+            });
+        console.log("This is my final object", obj);
+    };
+
+    return view == 1 ? (
         <>
             <Typography
                 variant="h4"
                 color="initial"
                 align="center"
-                paragraph
-                gutterBottom={true}
+                gutterBottom
             >
                 Sign Up
             </Typography>
             <br></br>
             <Container maxWidth="xs" align="center">
                 <Grid container spacing={3} direction="column">
-                    <FormControl>
-                        <FormLabel justify="left">First Name</FormLabel>
-                        <OutlinedInput
+                    <Grid item>
+                        <TextField
                             name="first"
+                            label="First"
                             type="text"
-                            value={first}
+                            variant="standard"
                             onChange={(e) => setFirst(e.target.value)}
                             required
-                            paragraph
-                        ></OutlinedInput>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Last Name</FormLabel>
-                        <OutlinedInput
+                        ></TextField>
+                    </Grid>
+                    <Grid item>
+                        <TextField
                             name="last"
                             type="text"
-                            value={last}
+                            label="Last"
+                            variant="standard"
                             onChange={(e) => setLast(e.target.value)}
-                            required={true}
-                            paragraph
-                        ></OutlinedInput>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Mail</FormLabel>
-                        <OutlinedInput
+                            required
+                        ></TextField>
+                    </Grid>
+                    <Grid item>
+                        <TextField
                             name="email"
                             type="email"
-                            value={email}
+                            label="Mail"
+                            variant="standard"
                             onChange={(e) => setEmail(e.target.value)}
-                            required={true}
-                            paragraph
-                        ></OutlinedInput>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Password</FormLabel>
-                        <OutlinedInput
+                            required
+                        ></TextField>
+                    </Grid>
+                    <Grid item>
+                        <TextField
                             name="password"
                             type="password"
-                            value={password}
+                            label="Password"
+                            variant="standard"
                             onChange={(e) => setPassword(e.target.value)}
-                            required={true}
-                            paragraph
-                        ></OutlinedInput>
-                    </FormControl>
-                    <Grid item spacing={1}>
+                            required
+                        ></TextField>
+                    </Grid>
+                    <Grid item>
                         <Button
                             variant="contained"
                             color="primary"
                             type="submit"
-                            startIcon={<Icon>arrow_upward</Icon>}
-                            onClick={handleClick}
-                            paragraph
+                            onClick={handleClickAndView}
                         >
-                            Submit
+                            GO ON
                         </Button>
                     </Grid>
                 </Grid>
@@ -122,115 +147,85 @@ const Registration = () => {
                     variant="subtitle1"
                     color="initial"
                     align="center"
-                    paragraph={true}
-                    gutterBottom={true}
+                    gutterBottom
                 >
                     You already registered? Please{" "}
                     <Link to="/login">log in here </Link>
                 </Typography>
             </Container>
         </>
+    ) : (
+        <>
+            <Typography
+                variant="h4"
+                color="initial"
+                align="center"
+                gutterBottom
+            >
+                Sign Up
+            </Typography>
+            <br></br>
+            <form>
+                <Container maxWidth="xs" align="center">
+                    <Grid container spacing={3} direction="column">
+                        <Grid item>
+                            <TextField
+                                name="city"
+                                label="City"
+                                type="text"
+                                variant="standard"
+                                // onChange={(e) => setCity(e.target.value)}
+                                required
+                            ></TextField>
+                        </Grid>
+                        <Grid item>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Gender</FormLabel>
+                                <RadioGroup
+                                    aria-label="Type"
+                                    name="Type"
+                                    value={value}
+                                    onChange={(e) => setValue(e.target.value)}
+                                >
+                                    <FormControlLabel
+                                        value="model"
+                                        control={<Radio />}
+                                        label="Model"
+                                    />
+                                    <FormControlLabel
+                                        value="photographer"
+                                        control={<Radio />}
+                                        label="Photographer"
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                onClick={handleSubmit}
+                            >
+                                SUBMIT
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <br></br>
+                    <br></br>
+                    <Typography
+                        variant="subtitle1"
+                        color="initial"
+                        align="center"
+                        gutterBottom
+                    >
+                        You already registered? Please{" "}
+                        <Link to="/login">log in here </Link>
+                    </Typography>
+                </Container>
+            </form>
+        </>
     );
 };
 
 export default Registration;
-
-// export default class Registration extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             error: null,
-//         };
-//     }
-
-//     handleChange(e) {
-//         // console.log("Handling Change!");
-//         this.setState(
-//             {
-//                 [e.target.name]: e.target.value,
-//             },
-//             () => console.log(this.state)
-//         );
-//     }
-
-//     handleClick() {
-//         console.log("Clicking works!!!");
-//         let obj = this.state;
-//         instance
-//             .post("/registration", obj)
-//             .then((obj) => {
-//                 console.log("This is my reg object: ", obj);
-//                 location.replace("/");
-//                 this.setState({
-//                     error: null,
-//                 });
-//             })
-//             .catch((err) => {
-//                 console.log("Error sending post to the server: ", err);
-//                 this.setState({
-//                     error: true,
-//                 });
-//             });
-//     }
-
-//     render() {
-//         return (
-//             <>
-//                 <h1 style={{ textAlign: "center" }}>
-//                     Join our Community!
-//                 </h1>
-//             <br></br>
-//             <br></br>
-//                 <input
-//                     name="first"
-//                     type="text"
-//                     onChange={(e) => this.handleChange(e)}
-//                     placeholder="First Name"
-//                     required
-//                 ></input>
-//             <br></br>
-//                 <input
-//                     name="last"
-//                     type="text"
-//                     onChange={(e) => this.handleChange(e)}
-//                     placeholder="Last Name"
-//                     required
-//                 ></input>
-//             <br></br>
-//                 <input
-//                     name="email"
-//                     type="email"
-//                     onChange={(e) => this.handleChange(e)}
-//                     placeholder="E-Mail"
-//                     required
-//                 ></input>
-//             <br></br>
-//                 <input
-//                     name="password"
-//                     type="password"
-//                     onChange={(e) => this.handleChange(e)}
-//                     placeholder="Password"
-//                     required
-//                 ></input>
-//             <br></br>
-//             <div id="reg-wrapper">
-//                 <Button
-//                     onClick={() => this.handleClick()}
-//                     type="submit"
-//                 >
-//                     Submit!
-//                 </Button>
-//                 {this.state.error && (
-//                     <p style={{ color: "red" }}>
-//                         Something broke! Please fill in missing
-//                         fields above!
-//                     </p>
-//                 )}
-//                 <br></br>
-//                 <p>Already a member?</p>
-//                 <Link to="/login">Click here to log in</Link>
-//             </div>
-//             </>
-//         );
-//     }
-// }
