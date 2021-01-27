@@ -1,16 +1,36 @@
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormLabel from "@material-ui/core/FormLabel";
-import { TextField, Grid, Container } from "@material-ui/core";
+import {
+    TextField,
+    Grid,
+    Container,
+    Hidden,
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    Icon,
+    makeStyles,
+} from "@material-ui/core";
 import instance from "./axios.js";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { TextFieldsRounded } from "@material-ui/icons";
+
+const useStyle = makeStyles((theme) => ({
+    offset: theme.mixins.toolbar,
+    mytoolBar: {
+        backgroundColor: "black",
+        color: "white",
+    },
+    buttons: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+}));
 
 const Login = () => {
+    const classes = useStyle();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
@@ -36,65 +56,103 @@ const Login = () => {
 
     return (
         <>
-            <Typography
-                variant="h4"
-                color="initial"
-                align="center"
-                paragraph
-                gutterBottom
-            >
-                Log In
-            </Typography>
-            <br></br>
-            <form>
-                <Container maxWidth="xs" align="center">
-                    <Grid container spacing={3} direction="column">
-                        <Grid item>
-                            <TextField
-                                id="email"
-                                type="email"
-                                label='Mail'
-                                variant="standard"
-                                onChange={(e) => setEmail(e.target.value)}
-                                autoFocus
-                                required
-                            ></TextField>
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                variant='standard'
-                                type="password"
-                                label='Password'
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            ></TextField>
-                        </Grid>
-
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                type="submit"
-                                startIcon={<Icon>arrow_upward</Icon>}
-                                onClick={handleClick}
-                            >
-                                Log In
-                            </Button>
-                        </Grid>
-                        <br></br>
-                        <br></br>
-                        <Typography
-                            variant="subtitle1"
-                            color="initial"
-                            align="center"
-                            paragraph
-                            gutterBottom={true}
-                        >
-                            <Link to="/reset">Forgot your password?</Link>
-                        </Typography>
+            <AppBar position="fixed" color="primary">
+                <Toolbar className={classes.mytoolBar}>
+                    <Typography variant="h6" className={classes.title}>
+                        photoMe
+                    </Typography>
+                    <Button variant="text" color="primary" href='/'>
+                        Sign up
+                    </Button>
+                    <Button variant="text" color="primary" href='/login'>
+                        Log in
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            <div className={classes.offset}></div>
+            <Grid container spacing={1} style={{ height: "100vh" }}>
+                <Hidden mdDown>
+                    <Grid item sm={0} md={6} lg={6}>
+                        <div style={{ height: "100vh" }}>
+                            <img
+                                src="/cover.jpg"
+                                style={{
+                                    overflow: "hidden",
+                                    objectFit: "cover",
+                                    maxWidth: "auto",
+                                    maxHeight: "100%",
+                                }}
+                            />
+                        </div>
                     </Grid>
-                </Container>
-            </form>
+                </Hidden>
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    lg={6}
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <form>
+                        <Container maxWidth="xs" align="center">
+                            <Grid container spacing={3} direction="column">
+                                <Grid item>
+                                    <TextField
+                                        id="email"
+                                        type="email"
+                                        label="Mail"
+                                        variant="standard"
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        autoFocus
+                                        required
+                                    ></TextField>
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        variant="standard"
+                                        type="password"
+                                        label="Password"
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        required
+                                    ></TextField>
+                                </Grid>
+
+                                <Grid item>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        onClick={handleClick}
+                                    >
+                                        Log In
+                                    </Button>
+                                </Grid>
+                                <br></br>
+                                <br></br>
+                                <Typography
+                                    variant="subtitle1"
+                                    color="initial"
+                                    align="center"
+                                    paragraph
+                                    gutterBottom
+                                >
+                                    <Link to="/reset">
+                                        Forgot your password?
+                                    </Link>
+                                </Typography>
+                            </Grid>
+                        </Container>
+                    </form>
+                </Grid>
+            </Grid>
         </>
     );
 };

@@ -55,7 +55,7 @@ const Profile = () => {
                         style={{
                             cursor: "pointer",
                             display: "flex",
-                            justifyContent: "flex-end",
+                            justifyContent: "center",
                         }}
                     >
                         <img

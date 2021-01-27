@@ -15,11 +15,29 @@ import {
     TextField,
     Grid,
     Container,
+    AppBar,
+    Toolbar,
+    makeStyles,
+    Hidden,
 } from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
+
+const useStyle = makeStyles((theme) => ({
+    offset: theme.mixins.toolbar,
+    mytoolBar: {
+        backgroundColor: "black",
+        color: "white",
+    },
+    buttons: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+}));
 
 const Registration = () => {
     const dispatch = useDispatch();
+    const classes = useStyle();
     // VIEW 1
     const [first, setFirst] = useState("");
     const [last, setLast] = useState("");
@@ -78,80 +96,124 @@ const Registration = () => {
 
     return view == 1 ? (
         <>
-            <Typography
-                variant="h4"
-                color="initial"
-                align="center"
-                gutterBottom
-            >
-                Sign Up
-            </Typography>
-            <br></br>
-            <Container maxWidth="xs" align="center">
-                <Grid container spacing={3} direction="column">
-                    <Grid item>
-                        <TextField
-                            name="first"
-                            label="First"
-                            type="text"
-                            variant="standard"
-                            onChange={(e) => setFirst(e.target.value)}
-                            required
-                        ></TextField>
+            <AppBar position="fixed" color="primary">
+                <Toolbar className={classes.mytoolBar}>
+                    <Typography variant="h6" className={classes.title}>
+                        photoMe
+                    </Typography>
+                    <Button variant="text" color="primary" href='/'>
+                        Sign up
+                    </Button>
+                    <Button variant="text" color="primary" href='/welcome#/login'>
+                        Log in
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            <div className={classes.offset}></div>
+            <Grid container spacing={1} style={{ height: "100vh" }}>
+                <Hidden mdDown>
+                    <Grid item sm={0} md={6} lg={6}>
+                        <div style={{height:'100vh'}}>
+                            <img
+                                src="/cover.jpg"
+                                style={{
+                                    overflow: "hidden",
+                                    objectFit: "cover",
+                                    maxWidth: "auto",
+                                    maxHeight: "100%",
+                                }}
+                            />
+                        </div>
                     </Grid>
-                    <Grid item>
-                        <TextField
-                            name="last"
-                            type="text"
-                            label="Last"
-                            variant="standard"
-                            onChange={(e) => setLast(e.target.value)}
-                            required
-                        ></TextField>
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                            name="email"
-                            type="email"
-                            label="Mail"
-                            variant="standard"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        ></TextField>
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                            name="password"
-                            type="password"
-                            label="Password"
-                            variant="standard"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        ></TextField>
-                    </Grid>
-                    <Grid item>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            onClick={handleClickAndView}
-                        >
-                            GO ON
-                        </Button>
-                    </Grid>
-                </Grid>
-                <br></br>
-                <br></br>
-                <Typography
-                    variant="subtitle1"
-                    color="initial"
-                    align="center"
-                    gutterBottom
+                </Hidden>
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    lg={6}
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
                 >
-                    You already registered? Please{" "}
-                    <Link to="/login">log in here </Link>
-                </Typography>
-            </Container>
+                    <form>
+                        <Container maxWidth="xs" align="center">
+                            <Grid container spacing={3} direction="column">
+                                <Grid item>
+                                    <TextField
+                                        name="first"
+                                        label="First"
+                                        type="text"
+                                        variant="standard"
+                                        onChange={(e) =>
+                                            setFirst(e.target.value)
+                                        }
+                                        required
+                                    ></TextField>
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        name="last"
+                                        type="text"
+                                        label="Last"
+                                        variant="standard"
+                                        onChange={(e) =>
+                                            setLast(e.target.value)
+                                        }
+                                        required
+                                    ></TextField>
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        name="email"
+                                        type="email"
+                                        label="Mail"
+                                        variant="standard"
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        required
+                                    ></TextField>
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        name="password"
+                                        type="password"
+                                        label="Password"
+                                        variant="standard"
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        required
+                                    ></TextField>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        onClick={handleClickAndView}
+                                    >
+                                        GO ON
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                            <br></br>
+                            <br></br>
+                            <Typography
+                                variant="subtitle1"
+                                color="initial"
+                                align="center"
+                                gutterBottom
+                            >
+                                You already registered? Please{" "}
+                                <Link to="/login">log in here </Link>
+                            </Typography>
+                        </Container>
+                    </form>
+                </Grid>
+            </Grid>
         </>
     ) : (
         <>
