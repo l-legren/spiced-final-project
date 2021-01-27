@@ -72,7 +72,7 @@ const Login = () => {
             <div className={classes.offset}></div>
             <Grid container spacing={1} style={{ height: "100vh" }}>
                 <Hidden mdDown>
-                    <Grid item sm={0} md={6} lg={6}>
+                    <Grid item md={6} lg={6}>
                         <div style={{ height: "100vh" }}>
                             <img
                                 src="/cover.jpg"

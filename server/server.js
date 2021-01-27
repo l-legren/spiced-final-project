@@ -109,17 +109,30 @@ app.post("/registration", (req, res) => {
                     });
                 });
         })
-        .catch((err) =>
-            console.log("Error hashing the password for database: ", err)
-        );
+        .catch((err) => {
+            console.log("Error hashing the password for database: ", err);
+            res.json({
+                success: false,
+            });
+        });
 });
 
 app.post("/reg-second-step", (req, res) => {
     console.log(req.body);
     const { id, city, model, photographer } = req.body;
     db.updateReg(id, city, model, photographer)
-        .then(() => console.log("Reg 2 stored in db"))
-        .catch((err) => console.log("Error storing in DB", err));
+        .then(() => {
+            console.log("Reg 2 stored in db");
+            res.json({
+                success: true,
+            });
+        })
+        .catch((err) => {
+            console.log("Error storing in DB", err);
+            res.json({
+                success: false,
+            });
+        });
 });
 
 app.post("/login", (req, res) => {
@@ -154,7 +167,6 @@ app.post("/password/reset/start", (req, res) => {
                 });
                 db.newCode(secretCode, rows[0].email)
                     .then(() => {
-                        // console.log("Code stored in Table");
                         sendEmail(
                             "carlosleret@gmail.com",
                             `Hey ${rows[0].first} ${rows[0].last}, here is your code! ${secretCode}`,
