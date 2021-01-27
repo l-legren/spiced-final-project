@@ -45,7 +45,7 @@ const EditBio = () => {
             <Divider variant="middle" />
             {profileInfo.bio ? (
                 <>
-                    <Typography variant="subtitle1" color="initial">
+                    <Typography variant="subtitle2" color="initial">
                         {profileInfo.bio}
                     </Typography>
                     {editVisibility && (

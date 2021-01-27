@@ -6,6 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { imageboardModalVisible, getUserImageboard } from "./actions";
 import UploaderImageboard from "./uploader-imageboard";
 
+const randomImages = [
+    "/abstract1.jpg",
+    "/abstract2.jpg",
+    "/abstract3.jpg",
+    "/abstract4.jpg",
+    "/abstract5.jpg",
+];
+
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: 5,
@@ -36,7 +44,19 @@ const UserImageBoard = () => {
 
     return (
         <>
-            <Box sx={{ display: "flex", justifyContent: "center", padding: 5 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: 5,
+                    background: `url(${
+                        randomImages[
+                            Math.floor(Math.random() * randomImages.length)
+                        ]
+                    })`,
+                    backgroundSize: "cover",
+                }}
+            >
                 <Button
                     className={classes.button}
                     variant="contained"
