@@ -13,18 +13,18 @@ module.exports.newMessage = (emitter_id, receiver_id, message) => {
     return db.query(q, params);
 };
 
-// module.exports.getTenMostRecentMessages = () => {
-//     const q = `SELECT first, last, profile_pic, timestamp, message
-//     FROM users
-//     LEFT OUTER JOIN messages
-//     ON (users.id = messages.emitter_id)
-//     WHERE message IS NOT NULL
-//     ORDER BY timestamp ASC
-//     LIMIT 10`;
-//     const params = [];
+module.exports.getTenMostRecentMessages = () => {
+    const q = `SELECT first, last, profile_pic, timestamp, message
+    FROM users
+    LEFT OUTER JOIN messages
+    ON (users.id = messages.emitter_id)
+    WHERE message IS NOT NULL
+    ORDER BY timestamp ASC
+    LIMIT 10`;
+    const params = [];
 
-//     return db.query(q, params);
-// };
+    return db.query(q, params);
+};
 
 module.exports.addFirstMessage = (logged_user, receiver_id, message) => {
     const q = `INSERT INTO messages (emitter_id, receiver_id, message)
@@ -60,12 +60,23 @@ module.exports.getUsersWithMessages = (id) => {
     return db.query(q, params);
 };
 
-// module.exports.getConnectedUsers = (array) => {
-//     const q = `
-//     SELECT id, first, last, profile_pic
-//     FROM users
-//     WHERE id = ANY ($1)`;
-//     const params = [array];
+module.exports.getUserInfo = (id) => {
+    const q = `
+    SELECT first, last, profile_pic
+    FROM users
+    WHERE id = ($1)`;
+    const params = [id];
 
-//     return db.query(q, params);
-// };
+    return db.query(q, params);
+};
+
+module.exports.getConnectedUsers = (array) => {
+    const q = `
+    SELECT id, first, last, profile_pic
+    FROM users
+    WHERE id = ANY ($1)`;
+    const params = [array];
+
+    return db.query(q, params);
+};
+

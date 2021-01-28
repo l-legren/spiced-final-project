@@ -4,14 +4,14 @@ import {
     Box,
     IconButton,
     makeStyles,
+    Divider,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addOtherUserInfo, chatVisibility, getPmUsers } from "./actions.js";
+import { addOtherUserInfo, getPmUsers } from "./actions.js";
 import instance from "./axios.js";
 import OtherUserImageBoard from "./other-user-imageboard";
 import CameraIcon from "@material-ui/icons/Camera";
-import { flexbox } from "@material-ui/system";
 import ChatLayout from "./pmlayout.js";
 import { modalFirstMessage } from "./actions";
 import FirstMessageDialog from "./firstmessage";
@@ -78,8 +78,16 @@ const OtherUser = ({ props }) => {
                 justify="center"
                 className={classes.root}
             >
-                <Grid item xs={12} md={3} lg={3}>
-                    <Grid item>
+                <Grid item md={1} lg={1} />
+                <Grid item xs={12} sm={12} md={3} lg={3}>
+                    <Grid
+                        item
+                        style={{
+                            cursor: "pointer",
+                            display: "flex",
+                            justifyContent: "center",
+                        }}
+                    >
                         <img
                             src={
                                 (userInfo.profile_pic &&
@@ -90,14 +98,17 @@ const OtherUser = ({ props }) => {
                                 width: 250,
                                 height: 250,
                                 objectFit: "cover",
+                                borderRadius: "50%",
                             }}
                         ></img>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={9} lg={9}>
+                <Grid item xs={12} sm={12} md={5} lg={5}>
                     <Grid container>
                         <Box
                             sx={{
+                                marginLeft: "40px",
+                                marginTop: "50px",
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "flex-start",
@@ -108,27 +119,33 @@ const OtherUser = ({ props }) => {
                                 <Typography variant="h4" color="initial">
                                     {userInfo.first} {userInfo.last}
                                 </Typography>
+                                <Divider variant="middle" />
+
+                                <Typography variant="subtitle1" color="initial">
+                                    {userInfo.city}.{" "}
+                                    {userInfo.photographer
+                                        ? "Photographer"
+                                        : "Model"}
+                                </Typography>
+                                <Divider variant="middle" />
 
                                 <Typography variant="subtitle1" color="initial">
                                     {userInfo.bio && userInfo.bio}
                                 </Typography>
+                                <IconButton
+                                    aria-label="reach-out bottom"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleClickOpen}
+                                >
+                                    <CameraIcon /> Reach out
+                                </IconButton>
                             </Box>
-                            <Box
-                                sx={{
-                                    height: 40,
-                                }}
-                            ></Box>
-                            <IconButton
-                                aria-label="reach-out bottom"
-                                variant="contained"
-                                color="primary"
-                                onClick={handleClickOpen}
-                            >
-                                <CameraIcon /> Reach out
-                            </IconButton>
                         </Box>
                     </Grid>
                 </Grid>
+                <Grid item md={2} lg={2} />
+                <Grid item md={1} lg={1} />
             </Grid>
             <Box sx={{ height: 100 }}></Box>
             <OtherUserImageBoard props={props} />

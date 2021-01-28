@@ -63,7 +63,16 @@ export default function reducer(state = {}, action) {
             // don't want to pass the pwd, filtering it in these lines below
             otherUserInfo: Object.keys(action.otherUserInfo)
                 .filter((key) =>
-                    ["id", "first", "last", "profile_pic", "bio"].includes(key)
+                    [
+                        "id",
+                        "first",
+                        "last",
+                        "profile_pic",
+                        "bio",
+                        "model",
+                        "photographer",
+                        "city",
+                    ].includes(key)
                 )
                 .reduce((obj, key) => {
                     obj[key] = action.otherUserInfo[key];
@@ -170,12 +179,12 @@ export default function reducer(state = {}, action) {
         };
     }
 
-    // if (action.type == "CONNECTED_USERS") {
-    //     state = {
-    //         ...state,
-    //         usersConnected: action.connectedUsers,
-    //     };
-    // }
+    if (action.type == "CONNECTED_USERS") {
+        state = {
+            ...state,
+            usersConnected: action.connectedUsers,
+        };
+    }
 
     // if (action.type == "ADD_CONNECTED_USER") {
     //     state = {

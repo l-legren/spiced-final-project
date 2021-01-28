@@ -360,8 +360,16 @@ app.post("/add-first-message", (req, res) => {
     console.log("adding first message", req.body);
     const { msg, user_id } = req.body;
     dbm.addFirstMessage(req.session.userId, user_id, msg)
-        .then(({ rows }) => console.log("First pm stored in DB"))
-        .catch((err) => console.log("Error storing the first pm in DB", err));
+        .then(({ rows }) => {
+            console.log("First pm stored in DB");
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("Error storing the first pm in DB", err);
+            res.json({
+                success: false,
+            });
+        });
 });
 
 app.get("/users-match/:match", (req, res) => {
@@ -380,7 +388,7 @@ app.get("/users-match/:match", (req, res) => {
         });
 });
 
-// let onlineUsers = {};
+let onlineUsers = {};
 
 io.on("connection", (socket) => {
     const userId = socket.request.session.userId;
@@ -389,25 +397,25 @@ io.on("connection", (socket) => {
         return socket.disconnect(true);
     }
 
-    // onlineUsers[socket.id] = userId;
+    onlineUsers[socket.id] = userId;
 
-    // dbc.getUserInfo(userId).then(({ rows }) => {
-    //     console.log("This is user connecting", rows[0]);
-    //     socket.broadcast.emit("adding connected user", rows[0]);
-    // });
-    // let arrOfIds = [...new Set(Object.values(onlineUsers))];
-    // dbc.getConnectedUsers(arrOfIds)
-    //     .then(({ rows }) => {
-    //         socket.emit("connected users", rows);
-    //     })
-    //     .catch((err) => console.log("Error getting connected users", err));
-    // // Display most recent messages
-    // dbc.getTenMostRecentMessages().then(({ rows }) => {
-    //     socket.emit("most recent messages", rows);
-    // });
+    dbm.getUserInfo(userId).then(({ rows }) => {
+        console.log("This is user connecting", rows[0]);
+        socket.broadcast.emit("adding connected user", rows[0]);
+    });
+    let arrOfIds = [...new Set(Object.values(onlineUsers))];
+    dbm.getConnectedUsers(arrOfIds)
+        .then(({ rows }) => {
+            socket.emit("connected users", rows);
+        })
+        .catch((err) => console.log("Error getting connected users", err));
+    // Display most recent messages
+    dbm.getTenMostRecentMessages().then(({ rows }) => {
+        socket.emit("most recent messages", rows);
+    });
 
     // Add a new message to the chatroom
-    socket.on("new chat message", (object) => {
+    socket.on("new private message", (object) => {
         const { message, ids } = object;
         const thirdUserId = ids.find((id) => id != userId);
         console.log(thirdUserId);
@@ -424,20 +432,20 @@ io.on("connection", (socket) => {
             );
     });
 
-    // // DISCONNECT FROM usersConnected
-    // socket.on("disconnect", () => {
-    //     console.log("Array before deleting", arrOfIds);
-    //     while (onlineUsers[socket.id]) {
-    //         delete onlineUsers[socket.id];
-    //     }
-    //     arrOfIds = [...new Set(Object.values(onlineUsers))];
-    //     console.log("Array after deleting", arrOfIds);
-    //     dbc.getConnectedUsers(arrOfIds)
-    //         .then(({ rows }) => {
-    //             socket.broadcast.emit("user disconnected", rows);
-    //         })
-    //         .catch((err) => console.log("Error deleting user", err));
-    // });
+    // DISCONNECT FROM usersConnected
+    socket.on("disconnect", () => {
+        console.log("Array before deleting", arrOfIds);
+        while (onlineUsers[socket.id]) {
+            delete onlineUsers[socket.id];
+        }
+        arrOfIds = [...new Set(Object.values(onlineUsers))];
+        console.log("Array after deleting", arrOfIds);
+        dbm.getConnectedUsers(arrOfIds)
+            .then(({ rows }) => {
+                socket.broadcast.emit("user disconnected", rows);
+            })
+            .catch((err) => console.log("Error deleting user", err));
+    });
 });
 
 // NEVER COMMENT OUT THIS LINE OF CODE!!!

@@ -1,0 +1,2 @@
+INSERT INTO messages (emitter_id, receiver_id, message) VALUES (215, 50, 'Hey hey, such good photographer! Up to a session?'),(50, 215, 'Yeah, lets do it!'),(215, 50, 'When you available?'),(50, 215, 'On
+ Friday?'),(215,50, 'Nice! For me too!'), (50, 215, 'Glad is gonna happen!');

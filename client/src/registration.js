@@ -173,7 +173,7 @@ const Registration = () => {
     ) : (
         <>
             <NavBarReg />
-            <Grid container spacing={1} style={{ height: "100vh" }}>
+            <Grid container spacing={1}>
                 <Hidden mdDown>
                     <Grid item md={6} lg={6}>
                         <div style={{ height: "100vh" }}>
@@ -208,6 +208,7 @@ const Registration = () => {
                                     label="City"
                                     type="text"
                                     variant="standard"
+                                    value={city}
                                     onChange={(e) => setCity(e.target.value)}
                                     required
                                 ></TextField>

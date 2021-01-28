@@ -158,37 +158,37 @@ export function usersInCity(users) {
 
 // // DISPATCH MESSAGES FROM CHAT
 
-// export function storeChatMessages(mostRecentMessages) {
-//     return {
-//         type: "ADD_RECENT_MESSAGES",
-//         recentMessages: mostRecentMessages,
-//     };
-// }
+export function storeChatMessages(mostRecentMessages) {
+    return {
+        type: "ADD_RECENT_MESSAGES",
+        recentMessages: mostRecentMessages,
+    };
+}
 
-export function addNewPrivateMessage(newMessage) {
+export function addNewMessage(newMessage) {
     return {
         type: "ADD_NEW_MESSAGE",
         newMessage: newMessage,
     };
 }
 
-// export function currentConnectedUsers(connectedUsers) {
-//     return {
-//         type: "CONNECTED_USERS",
-//         connectedUsers: connectedUsers,
-//     };
-// }
+export function currentConnectedUsers(connectedUsers) {
+    return {
+        type: "CONNECTED_USERS",
+        connectedUsers: connectedUsers,
+    };
+}
 
-// export function addConnectedUser(connectedUser) {
-//     return {
-//         type: "ADD_CONNECTED_USER",
-//         connectedUser: connectedUser,
-//     };
-// }
+export function addConnectedUser(connectedUser) {
+    return {
+        type: "ADD_CONNECTED_USER",
+        connectedUser: connectedUser,
+    };
+}
 
-// export function connectedUsersAfterUserLeaving(afterUserLeaving) {
-//     return {
-//         type: "USER_LEAVING",
-//         afterUserLeaving: afterUserLeaving,
-//     };
-// }
+export function connectedUsersAfterUserLeaving(afterUserLeaving) {
+    return {
+        type: "USER_LEAVING",
+        afterUserLeaving: afterUserLeaving,
+    };
+}

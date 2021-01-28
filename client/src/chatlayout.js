@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    getMessagesWithUser,
-    addNewPrivateMessage,
+    addNewMessage,
     getUserInfo,
 } from "./actions";
 import { socket } from "./socket";
@@ -13,7 +12,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
     myText: {
         position: "fixed",
-        width: "inherit",
         bottom: 5,
         right: 5,
     },
@@ -53,7 +51,7 @@ const ChatLayout = () => {
                 ids: arrofIds,
             });
             dispatch(
-                addNewPrivateMessage({
+                addNewMessage({
                     message: e.target.value,
                     id: myUser.id,
                     first: myUser.first,
@@ -66,7 +64,6 @@ const ChatLayout = () => {
 
     useEffect(() => {
         dispatch(getUserInfo());
-        dispatch(getMessagesWithUser());
     }, []);
 
     const typ = (first, last, message) => (
@@ -120,6 +117,7 @@ const ChatLayout = () => {
                         rows={2}
                         autoFocus
                         onKeyDown={handleKeyDown}
+                        fullWidth
                     />
                 </Grid>
             </Grid>

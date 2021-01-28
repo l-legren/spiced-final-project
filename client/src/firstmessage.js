@@ -6,19 +6,19 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useDispatch, useSelector } from "react-redux";
-import { modalFirstMessage } from "./actions";
 import { useEffect, useState } from "react";
 import instance from "./axios";
+import { modalFirstMessage } from "./actions";
 
 export default function FirstMessageDialog({ props }) {
     const [firstMessage, setFirstMessage] = useState("");
 
-    const modalFirstMessage = useSelector(
+    const modalFirstMessageState = useSelector(
         (state) => (state && state.modalFirstMessage) || false
     );
-    const userFirstMessage = useSelector(
-        (state) => (state && state.firstMessage) || ""
-    );
+    // const userFirstMessage = useSelector(
+    //     (state) => (state && state.firstMessage) || ""
+    // );
     const dispatch = useDispatch();
 
     const handleClose = () => {
@@ -31,15 +31,14 @@ export default function FirstMessageDialog({ props }) {
                 msg: firstMessage,
                 user_id: props.match.params.id,
             })
-            .then(() => {
-            });
+            .then(() => {});
         location.replace("/messages");
     };
 
     return (
         <div>
             <Dialog
-                open={modalFirstMessage}
+                open={modalFirstMessageState}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-title"
             >

@@ -1,9 +1,9 @@
-import { Button, Box, Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { imageboardModalVisible, getOtherUserImageboard } from "./actions";
+import { getOtherUserImageboard } from "./actions";
 
 const OtherUserImageBoard = ({ props }) => {
     const dispatch = useDispatch();
@@ -12,14 +12,13 @@ const OtherUserImageBoard = ({ props }) => {
     );
 
     useEffect(() => {
-        console.log(props);
         dispatch(getOtherUserImageboard(props.match.params.id));
     }, []);
 
     return (
         <>
             <Grid container spacing={1}>
-                <Grid item xs={0} sm={0} md={1} lg={2}></Grid>
+                <Grid item md={1} lg={2}></Grid>
                 <Grid item xs={12} sm={12} md={10} lg={8}>
                     {otherUserImageboard.length == 0 && (
                         <>
@@ -51,7 +50,7 @@ const OtherUserImageBoard = ({ props }) => {
                         })}
                     </ImageList>
                 </Grid>
-                <Grid item xs={0} sm={0} md={1} lg={2}></Grid>
+                <Grid item md={1} lg={2}></Grid>
             </Grid>
         </>
     );
