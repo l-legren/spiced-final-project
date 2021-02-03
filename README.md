@@ -27,3 +27,4 @@ To make it run just clone the repository, install all the dependencies with ```n
 
 ## Screenshots
 
+![Homepage](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/filtering.jpg)
