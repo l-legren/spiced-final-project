@@ -27,13 +27,22 @@ To make it run just clone the repository, install all the dependencies with ```n
 
 ## Screenshots
 
-###Registration
+### Registration
+
 ![Registration Page](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/registration.jpg)
-###Homepage
+
+### Homepage
+
 ![Homepage](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/homepage.jpg)
-###Uploader 
+
+### Uploader 
+
 ![Uploader](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/upload_modal.jpg)
-###Private messaging
-![Private Messaging](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/private messaging.jpg)
-###Switch
+
+### Private messaging
+
+![Private Messaging](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/private_messaging.jpg)
+
+### Switch
+
 ![Filtering](https://raw.githubusercontent.com/l-legren/spiced-final-project/master/client/public/screenshot/filtering.jpg)
