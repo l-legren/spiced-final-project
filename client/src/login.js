@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import instance from "./axios.js";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
     offset: theme.mixins.toolbar,
@@ -33,7 +33,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     const handleClick = () => {
         console.log("Clicking works!!!");
@@ -45,12 +45,12 @@ const Login = () => {
             .post("/login", obj)
             .then((obj) => {
                 console.log("This is my reg object: ", obj);
-                location.replace("/");
-                setError(false);
+                setTimeout(() => {
+                    location.replace("/");
+                }, 500);
             })
             .catch((err) => {
                 console.log("Error sending post to the server: ", err);
-                setError(true);
             });
     };
 
@@ -61,10 +61,10 @@ const Login = () => {
                     <Typography variant="h6" className={classes.title}>
                         photoMe
                     </Typography>
-                    <Button variant="text" color="primary" href='/'>
+                    <Button variant="text" color="primary" href="/">
                         Sign up
                     </Button>
-                    <Button variant="text" color="primary" href='/login'>
+                    <Button variant="text" color="primary" href="/login">
                         Log in
                     </Button>
                 </Toolbar>
@@ -97,60 +97,54 @@ const Login = () => {
                         alignItems: "center",
                     }}
                 >
-                    <form>
-                        <Container maxWidth="xs" align="center">
-                            <Grid container spacing={3} direction="column">
-                                <Grid item>
-                                    <TextField
-                                        id="email"
-                                        type="email"
-                                        label="Mail"
-                                        variant="standard"
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                        autoFocus
-                                        required
-                                    ></TextField>
-                                </Grid>
-                                <Grid item>
-                                    <TextField
-                                        variant="standard"
-                                        type="password"
-                                        label="Password"
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                        required
-                                    ></TextField>
-                                </Grid>
-
-                                <Grid item>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        type="submit"
-                                        onClick={handleClick}
-                                    >
-                                        Log In
-                                    </Button>
-                                </Grid>
-                                <br></br>
-                                <br></br>
-                                <Typography
-                                    variant="subtitle1"
-                                    color="initial"
-                                    align="center"
-                                    paragraph
-                                    gutterBottom
-                                >
-                                    <Link to="/reset">
-                                        Forgot your password?
-                                    </Link>
-                                </Typography>
+                    <Container maxWidth="xs" align="center">
+                        <Grid container spacing={3} direction="column">
+                            <Grid item>
+                                <TextField
+                                    id="email"
+                                    type="email"
+                                    label="Mail"
+                                    variant="standard"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    autoFocus
+                                    required
+                                ></TextField>
                             </Grid>
-                        </Container>
-                    </form>
+                            <Grid item>
+                                <TextField
+                                    variant="standard"
+                                    type="password"
+                                    label="Password"
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    required
+                                ></TextField>
+                            </Grid>
+
+                            <Grid item>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    type="submit"
+                                    onClick={handleClick}
+                                >
+                                    Log In
+                                </Button>
+                            </Grid>
+                            <br></br>
+                            <br></br>
+                            <Typography
+                                variant="subtitle1"
+                                color="initial"
+                                align="center"
+                                paragraph
+                                gutterBottom
+                            >
+                                <Link to="/reset">Forgot your password?</Link>
+                            </Typography>
+                        </Grid>
+                    </Container>
                 </Grid>
             </Grid>
         </>

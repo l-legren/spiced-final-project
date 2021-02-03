@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { imageboardModalVisible, getUserImageboard } from "./actions";
 import UploaderImageboard from "./uploader-imageboard";
 
-const randomImages = [
+export const randomImages = [
     "/abstract1.jpg",
     "/abstract2.jpg",
     "/abstract3.jpg",
@@ -70,7 +70,6 @@ const UserImageBoard = () => {
             <UploaderImageboard />
             <Grid container spacing={1} className={classes.root}>
                 <Grid item md={1} lg={1}>
-                    <div></div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={10} lg={10}>
                     <ImageList variant="masonry" cols={3} gap={8}>

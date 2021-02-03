@@ -90,7 +90,7 @@ const CityUsers = () => {
                             {(models ? onlyModels : onlyPhotographers).map(
                                 (user, idx) => {
                                     return (
-                                        <div key={idx}>
+                                        <a key={idx} href={`/users/${user.id}`}>
                                             <ImageListItem key={idx}>
                                                 <img
                                                     style={{
@@ -110,7 +110,7 @@ const CityUsers = () => {
                                                     }
                                                 />
                                             </ImageListItem>
-                                        </div>
+                                        </a>
                                     );
                                 }
                             )}

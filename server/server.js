@@ -400,7 +400,7 @@ io.on("connection", (socket) => {
     onlineUsers[socket.id] = userId;
 
     dbm.getUserInfo(userId).then(({ rows }) => {
-        console.log("This is user connecting", rows[0]);
+        // console.log("This is user connecting", rows[0]);
         socket.broadcast.emit("adding connected user", rows[0]);
     });
     let arrOfIds = [...new Set(Object.values(onlineUsers))];
@@ -421,7 +421,7 @@ io.on("connection", (socket) => {
         console.log(thirdUserId);
         dbm.newMessage(userId, thirdUserId, message)
             .then(({ rows }) => {
-                console.log(rows);
+                // console.log(rows);
                 //     dbc.getUserWithMessage(rows[0].message).then(({ rows }) => {
                 //         console.log("These are fields after double query", rows[0]);
                 //         io.sockets.emit("new message and user", rows[0]);

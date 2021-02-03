@@ -32,12 +32,15 @@ const PrivateMessages = () => {
     const pmUsers = useSelector((state) => (state && state.pmUsers) || []);
     var loggedUser = useSelector((state) => (state && state.userInfo) || {});
 
-    function filterUsers(user) {
-        return user.id != loggedUser.id;
-    }
+    console.log('pmUsers', pmUsers)
 
-    const filtered = pmUsers.filter(filterUsers);
+    // function filterUsers(user) {
+    //     console.log('Users', user.id)
+    //     return user.id != loggedUser.id;
+    // }
 
+    const filtered = pmUsers.filter(user => user.id != loggedUser.id);
+    console.log("Filtered", filtered);
     const selectUser = (e) => {
         dispatch(getMessagesWithUser(e));
     };

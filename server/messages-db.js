@@ -38,7 +38,7 @@ module.exports.getMessagesWithUser = (logged_user, third_user) => {
     const q = `SELECT users.id, first, last, profile_pic, message, timestamp 
     FROM users
     LEFT OUTER JOIN messages
-    ON (users.id = messages.emitter_id)
+    ON ((users.id = messages.emitter_id))
     WHERE (emitter_id = ($1) AND receiver_id = $2)
     OR (emitter_id = ($2) AND receiver_id = $1)
     ORDER BY timestamp ASC`;
@@ -49,7 +49,8 @@ module.exports.getMessagesWithUser = (logged_user, third_user) => {
 
 module.exports.getUsersWithMessages = (id) => {
     const q = `
-    SELECT DISTINCT users.id, first, last, profile_pic
+    SELECT DISTINCT 
+    users.id, first, last, profile_pic, emitter_id, receiver_id
     FROM users 
     LEFT OUTER JOIN messages
     ON (users.id = receiver_id)
@@ -79,4 +80,3 @@ module.exports.getConnectedUsers = (array) => {
 
     return db.query(q, params);
 };
-

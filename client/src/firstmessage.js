@@ -31,8 +31,9 @@ export default function FirstMessageDialog({ props }) {
                 msg: firstMessage,
                 user_id: props.match.params.id,
             })
-            .then(() => {});
-        location.replace("/messages");
+            .then(() => {
+                location.replace("/messages");
+            });
     };
 
     return (

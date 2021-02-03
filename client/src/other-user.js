@@ -18,7 +18,7 @@ import FirstMessageDialog from "./firstmessage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: 5,
+        padding: 20,
         background: "#f2f2f2",
         color: "black",
         borderRadius: 5,
@@ -147,7 +147,6 @@ const OtherUser = ({ props }) => {
                 <Grid item md={2} lg={2} />
                 <Grid item md={1} lg={1} />
             </Grid>
-            <Box sx={{ height: 100 }}></Box>
             <OtherUserImageBoard props={props} />
             {chatState && <ChatLayout />}
         </>
