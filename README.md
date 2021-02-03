@@ -9,7 +9,10 @@ This project was built during my attendance to the Spiced Academy's Web Developm
 
 ## Why this?
 
-After having gained experience with user interfaces and React I decided remake my social-network project [Link to Social Network Repo](https://github.com/l-legren/spiced-social-network) and built a website with a nicer UI using Material UI. In addition to this, the whole app was built from the beginning with Redux and React Hooks, so the code was almost entirely rewritten.
+This repo is partly based on the social network project. Link here.
+[Link to Social Network Repo](https://github.com/l-legren/spiced-social-network)
+
+After having gained experience with user interfaces and React I decided remake my social-network project and built a website with a nicer UI using Material UI. In addition to this, the whole app was built from the beginning with Redux and React Hooks, so the code was almost entirely rewritten. Instead of a Chatroom with Socket IO, this app has a private messaging feature working with simple queries to the DB.
 
 ## Technologies I used
 
