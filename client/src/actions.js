@@ -116,6 +116,7 @@ export function modalFirstMessage(bool) {
 export async function getPmUsers() {
     try {
         var { data } = await instance.get("/get-private-messages");
+        console.log("These users I have messages with", data)
     } catch {
         (err) => console.log("error fetching private messages", err);
     }
