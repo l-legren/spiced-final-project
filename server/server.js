@@ -340,7 +340,7 @@ app.get("/log-out", (req, res) => {
 app.get("/get-private-messages", (req, res) => {
     dbm.getUsersWithMessages(req.session.userId)
         .then(({ rows }) => {
-            console.log("Users with messages", rows);
+            console.log("Users with messages: ", rows);
             res.json(rows);
         })
         .catch((err) => console.log("Error query private messages users", err));
