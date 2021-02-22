@@ -340,8 +340,18 @@ app.get("/log-out", (req, res) => {
 app.get("/get-private-messages", (req, res) => {
     dbm.getUsersWithMessages(req.session.userId)
         .then(({ rows }) => {
-            console.log("Users with messages: ", rows);
-            res.json(rows);
+            // console.log("Users with messages", rows);
+            let idsArr = [];
+            rows.map((msg) => {
+                idsArr.push(msg.emitter_id);
+                idsArr.push(msg.receiver_id);
+            });
+            let uniqueIds = [...new Set(idsArr)];
+            // console.log("This is unique", uniqueIds);
+            dbm.getConnectedUsers(uniqueIds).then(({ rows }) => {
+                console.log("These are all users I have messages with", rows);
+                res.json(rows);
+            });
         })
         .catch((err) => console.log("Error query private messages users", err));
 });
